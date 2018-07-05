@@ -44,13 +44,13 @@ public class DefaultBeanFactory implements BeanFactory {
             //利用dom4j的方法将InputStream对象变成Document
             SAXReader reader = new SAXReader();
             Document doc = reader.read(is);
-            //对document中的element进行遍历 即遍历beans标签 root即<beans>
-            Element root = doc.getRootElement();
-            Iterator<Element> iterator = root.elementIterator();
+            //对document中的rootElement进行遍历 即遍历beans标签
+            Element beans = doc.getRootElement();
+            Iterator<Element> iterator = beans.elementIterator();
             while (iterator.hasNext()) {
-                Element ele = iterator.next();
-                String id = ele.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
+                Element bean = iterator.next();
+                String id = bean.attributeValue(ID_ATTRIBUTE);
+                String beanClassName = bean.attributeValue(CLASS_ATTRIBUTE);
                 BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
                 beanDefinitionMap.put(id, bd);
             }
@@ -78,8 +78,8 @@ public class DefaultBeanFactory implements BeanFactory {
         if (Objects.isNull(bd)) {
             throw new BeanCreationException("BeanDefinition is not exist");
         }
-        ClassLoader cl = BaseClassUtils.getDefaultClassLoader();
         String beanClassName = bd.getBeanClassName();
+        ClassLoader cl = BaseClassUtils.getDefaultClassLoader();
         try {
             Class<?> clz = cl.loadClass(beanClassName);
             return clz.newInstance();
