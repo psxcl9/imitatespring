@@ -1,0 +1,22 @@
+package org.imitationspring.beans.factory.support;
+
+import org.imitationspring.beans.BeanDefinition;
+
+/**
+ * @author liaocx
+ */
+public interface BeanDefinitionRegistry {
+    /**
+     * 通过beanId获取一个BeanDefinition对象
+     * @param beanId
+     * @return
+     */
+    BeanDefinition getBeanDefinition(String beanId);
+
+    /**
+     *  仅用于注册BeanDefinition
+     * @param beanId
+     * @param bd
+     */
+    void registerBeanDefinition(String beanId, BeanDefinition bd);
+}
