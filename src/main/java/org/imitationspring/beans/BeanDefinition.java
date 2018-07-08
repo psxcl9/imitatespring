@@ -5,9 +5,11 @@ package org.imitationspring.beans;
  * @author liaocx 
  */
 public interface BeanDefinition {
+
     /**
      * 获取类的完整包名
      * @return
      */
     String getBeanClassName();
+
 }

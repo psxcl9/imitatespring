@@ -5,6 +5,7 @@ package org.imitationspring.beans.factory;
  * @author liaocx
  */
 public interface BeanFactory {
+
     /**
      * 通过beanId获取一个具体的Bean
      * @param beanId

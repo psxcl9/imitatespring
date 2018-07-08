@@ -9,18 +9,19 @@ import org.imitationspring.service.v1.PetStoreService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-
 public class BeanFactoryTest {
-    DefaultBeanFactory factory;
-    XmlBeanDefinitionReader reader;
+
+    DefaultBeanFactory factory = null;
+    XmlBeanDefinitionReader reader = null;
+
     @Before
     public void setUp() {
         factory = new DefaultBeanFactory();
         reader = new XmlBeanDefinitionReader(factory);
     }
+
     @Test
     public void testGetBean() {
         reader.loadBeanDefinitions("petstore-v1.xml");
