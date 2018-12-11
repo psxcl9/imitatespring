@@ -3,20 +3,20 @@ package org.imitationspring.context.support;
 import org.imitationspring.beans.factory.support.DefaultBeanFactory;
 import org.imitationspring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.imitationspring.context.ApplicationContext;
-import org.imitationspring.core.io.ClassPathResource;
+import org.imitationspring.core.io.FileSystemResource;
 import org.imitationspring.core.io.Resource;
 
 /**
  * @author liaocx
  */
-public class ClassPathXmlApplicationContext implements ApplicationContext{
+public class FileSystemXmlApplicationContext implements ApplicationContext {
 
     private DefaultBeanFactory factory = null;
 
-    public ClassPathXmlApplicationContext(String configFile) {
+    public FileSystemXmlApplicationContext(String configFile) {
         factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        Resource resource = new ClassPathResource(configFile);
+        Resource resource = new FileSystemResource(configFile);
         reader.loadBeanDefinitions(resource);
     }
 
@@ -24,5 +24,4 @@ public class ClassPathXmlApplicationContext implements ApplicationContext{
     public Object getBean(String beanId) {
         return factory.getBean(beanId);
     }
-
 }

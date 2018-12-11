@@ -34,11 +34,9 @@ public class XmlBeanDefinitionReader {
     /**
      *  解析xml文件
      */
-    public void loadBeanDefinitions(String configFile) {
+    public void loadBeanDefinitions(Resource resource) {
         InputStream is = null;
         try {
-            //通过xml文件生成Resource对象
-            Resource resource = new ClassPathResource(configFile);
             try {
                 is = resource.getInputStream();
             } catch (IOException e) {

@@ -5,6 +5,8 @@ import org.imitationspring.beans.factory.BeanCreationException;
 import org.imitationspring.beans.factory.BeanDefinitionStoreException;
 import org.imitationspring.beans.factory.support.DefaultBeanFactory;
 import org.imitationspring.beans.factory.xml.XmlBeanDefinitionReader;
+import org.imitationspring.core.io.ClassPathResource;
+import org.imitationspring.core.io.Resource;
 import org.imitationspring.service.v1.PetStoreService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,16 +17,18 @@ public class BeanFactoryTest {
 
     DefaultBeanFactory factory = null;
     XmlBeanDefinitionReader reader = null;
+    Resource resource = null;
 
     @Before
     public void setUp() {
         factory = new DefaultBeanFactory();
         reader = new XmlBeanDefinitionReader(factory);
+        resource = new ClassPathResource("petstore-v1.xml");
     }
 
     @Test
     public void testGetBean() {
-        reader.loadBeanDefinitions("petstore-v1.xml");
+        reader.loadBeanDefinitions(resource);
         BeanDefinition definition = factory.getBeanDefinition("petStoreService");
         assertEquals("org.imitationspring.service.v1.PetStoreService", definition.getBeanClassName());
         PetStoreService petStoreService = (PetStoreService) factory.getBean("petStoreService");
@@ -33,7 +37,7 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean() {
-        reader.loadBeanDefinitions("petstore-v1.xml");
+        reader.loadBeanDefinitions(resource);
         try {
             factory.getBean("invalidBean");
         } catch (BeanCreationException e) {
@@ -45,7 +49,8 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXML() {
         try {
-            reader.loadBeanDefinitions("xxx.xml");
+            resource = new ClassPathResource("xxx.xml");
+            reader.loadBeanDefinitions(resource);
         } catch (BeanDefinitionStoreException e) {
             return;
         }
