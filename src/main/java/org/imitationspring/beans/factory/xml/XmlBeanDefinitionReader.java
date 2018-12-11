@@ -32,7 +32,7 @@ public class XmlBeanDefinitionReader {
     }
 
     /**
-     *  解析xml文件
+     *  解析Resource对象
      */
     public void loadBeanDefinitions(Resource resource) {
         InputStream is = null;
@@ -67,4 +67,5 @@ public class XmlBeanDefinitionReader {
             }
         }
     }
+
 }

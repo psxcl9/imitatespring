@@ -9,19 +9,14 @@ import org.imitationspring.core.io.Resource;
 /**
  * @author liaocx
  */
-public class FileSystemXmlApplicationContext implements ApplicationContext {
-
-    private DefaultBeanFactory factory = null;
+public class FileSystemXmlApplicationContext extends AbstractApplicationContext {
 
     public FileSystemXmlApplicationContext(String configFile) {
-        factory = new DefaultBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        Resource resource = new FileSystemResource(configFile);
-        reader.loadBeanDefinitions(resource);
+        super(configFile);
     }
 
     @Override
-    public Object getBean(String beanId) {
-        return factory.getBean(beanId);
+    protected Resource getResourceByPath(String path) {
+        return new FileSystemResource(path);
     }
 }
