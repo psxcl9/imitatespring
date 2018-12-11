@@ -1,8 +1,5 @@
 package org.imitationspring.context.support;
 
-import org.imitationspring.beans.factory.support.DefaultBeanFactory;
-import org.imitationspring.beans.factory.xml.XmlBeanDefinitionReader;
-import org.imitationspring.context.ApplicationContext;
 import org.imitationspring.core.io.FileSystemResource;
 import org.imitationspring.core.io.Resource;
 

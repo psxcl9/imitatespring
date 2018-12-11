@@ -4,6 +4,7 @@ import org.imitationspring.beans.factory.support.DefaultBeanFactory;
 import org.imitationspring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.imitationspring.context.ApplicationContext;
 import org.imitationspring.core.io.Resource;
+import org.imitationspring.util.ClassUtils;
 
 /**
  * 抽象类, 模版方法设计模式, 具体实现类只需要重写获取Resource的方法
@@ -13,11 +14,14 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
     private DefaultBeanFactory factory = null;
 
+    private ClassLoader beanClassLoader;
+
     public AbstractApplicationContext(String configFile) {
         factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = getResourceByPath(configFile);
         reader.loadBeanDefinitions(resource);
+        factory.setBeanClassLoader(getBeanClassLoader());
     }
 
     @Override
@@ -31,4 +35,14 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
      * @return
      */
     protected abstract Resource getResourceByPath(String path);
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.beanClassLoader = classLoader;
+    }
+
+    @Override
+    public ClassLoader getBeanClassLoader() {
+        return beanClassLoader != null ? beanClassLoader : ClassUtils.getDefaultClassLoader();
+    }
 }

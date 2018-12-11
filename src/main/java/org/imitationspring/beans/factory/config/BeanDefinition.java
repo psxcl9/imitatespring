@@ -6,10 +6,21 @@ package org.imitationspring.beans.factory.config;
  */
 public interface BeanDefinition {
 
+    String SCOPE_SINGLETON = "singleton";
+    String SCOPE_PROTOTYPE = "prototype";
+    String SCOPE_DEFAULT = "";
+
     /**
      * 获取类的完整包名
      * @return String
      */
     String getBeanClassName();
 
+    boolean isSingleton();
+
+    boolean isPrototype();
+
+    String getScope();
+
+    void setScope(String scope);
 }

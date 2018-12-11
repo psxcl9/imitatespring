@@ -30,9 +30,14 @@ public class BeanFactoryTest {
     public void testGetBean() {
         reader.loadBeanDefinitions(resource);
         BeanDefinition definition = factory.getBeanDefinition("petStoreService");
+        assertTrue(definition.isSingleton());
+        assertFalse(definition.isPrototype());
+        assertEquals(BeanDefinition.SCOPE_DEFAULT, definition.getScope());
         assertEquals("org.imitationspring.service.v1.PetStoreService", definition.getBeanClassName());
         PetStoreService petStoreService = (PetStoreService) factory.getBean("petStoreService");
         assertNotNull(petStoreService);
+        PetStoreService petStoreService1 = (PetStoreService) factory.getBean("petStoreService");
+        assertTrue(petStoreService.equals(petStoreService1));
     }
 
     @Test
