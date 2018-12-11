@@ -1,11 +1,12 @@
 package org.imitationspring.beans.factory.support;
 
-import org.imitationspring.beans.BeanDefinition;
+import org.imitationspring.beans.factory.config.BeanDefinition;
 
 /**
  * @author liaocx
  */
 public interface BeanDefinitionRegistry {
+
     /**
      * 通过beanId获取一个BeanDefinition对象
      * @param beanId

@@ -1,8 +1,9 @@
 package org.imitationspring.beans.factory.support;
 
-import org.imitationspring.beans.BeanDefinition;
+import org.imitationspring.beans.factory.config.BeanDefinition;
 
 /**
+ * bean在spring容器中的数据结构
  * @author liaocx
  */
 public class GenericBeanDefinition implements BeanDefinition {
@@ -14,6 +15,7 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.id = id;
         this.beanClassName = beanClassName;
     }
+
     @Override
     public String getBeanClassName() {
         return this.beanClassName;

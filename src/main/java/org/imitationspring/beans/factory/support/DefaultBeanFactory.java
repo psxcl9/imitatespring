@@ -1,9 +1,9 @@
 package org.imitationspring.beans.factory.support;
 
-import org.imitationspring.beans.BeanDefinition;
+import org.imitationspring.beans.factory.config.BeanDefinition;
 import org.imitationspring.beans.factory.BeanCreationException;
 import org.imitationspring.beans.factory.BeanFactory;
-import org.imitationspring.util.BaseClassUtils;
+import org.imitationspring.util.ClassUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -19,6 +19,9 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
     public DefaultBeanFactory() {
     }
 
+    /**
+     * BeanDefinitionRegistry
+     */
     @Override
     public BeanDefinition getBeanDefinition(String beanId) {
         return beanDefinitionMap.get(beanId);
@@ -29,6 +32,9 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         beanDefinitionMap.put(beanId, bd);
     }
 
+    /**
+     * BeanFactory
+     */
     @Override
     public Object getBean(String beanId) {
         BeanDefinition bd = getBeanDefinition(beanId);
@@ -36,9 +42,10 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
             throw new BeanCreationException("BeanDefinition is not exist");
         }
         String beanClassName = bd.getBeanClassName();
-        ClassLoader cl = BaseClassUtils.getDefaultClassLoader();
+        ClassLoader cl = ClassUtils.getDefaultClassLoader();
         try {
             Class<?> clz = cl.loadClass(beanClassName);
+            //默认有个无参的构造函数
             return clz.newInstance();
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + " failed", e);

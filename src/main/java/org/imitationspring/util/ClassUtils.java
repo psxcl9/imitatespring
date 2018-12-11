@@ -3,7 +3,7 @@ package org.imitationspring.util;
 /**
  * @author org.springframework.util
  */
-public abstract class BaseClassUtils {
+public abstract class ClassUtils {
     public static ClassLoader getDefaultClassLoader() {
         ClassLoader cl = null;
         try {
@@ -14,7 +14,7 @@ public abstract class BaseClassUtils {
         }
         if (cl == null) {
             // No thread context class loader -> use class loader of this class.
-            cl = BaseClassUtils.class.getClassLoader();
+            cl = ClassUtils.class.getClassLoader();
             if (cl == null) {
                 // getClassLoader() returning null indicates the bootstrap ClassLoader
                 try {

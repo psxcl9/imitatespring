@@ -4,11 +4,13 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.imitationspring.beans.BeanDefinition;
+import org.imitationspring.beans.factory.config.BeanDefinition;
 import org.imitationspring.beans.factory.BeanDefinitionStoreException;
 import org.imitationspring.beans.factory.support.BeanDefinitionRegistry;
 import org.imitationspring.beans.factory.support.GenericBeanDefinition;
-import org.imitationspring.util.BaseClassUtils;
+import org.imitationspring.core.io.ClassPathResource;
+import org.imitationspring.core.io.Resource;
+import org.imitationspring.util.ClassUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,13 +37,17 @@ public class XmlBeanDefinitionReader {
     public void loadBeanDefinitions(String configFile) {
         InputStream is = null;
         try {
-            //通过ClassLoader将xml文件变成InputStream对象
-            ClassLoader cl = BaseClassUtils.getDefaultClassLoader();
-            is = cl.getResourceAsStream(configFile);
+            //通过xml文件生成Resource对象
+            Resource resource = new ClassPathResource(configFile);
+            try {
+                is = resource.getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //利用dom4j的方法将InputStream对象变成Document
             SAXReader reader = new SAXReader();
             Document doc = reader.read(is);
-            //对document中的rootElement进行遍历 即遍历beans标签
+            //对doc中的rootElement进行遍历 即遍历beans标签
             Element beans = doc.getRootElement();
             Iterator<Element> iterator = beans.elementIterator();
             while (iterator.hasNext()) {

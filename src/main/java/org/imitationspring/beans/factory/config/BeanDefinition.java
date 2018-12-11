@@ -1,4 +1,4 @@
-package org.imitationspring.beans;
+package org.imitationspring.beans.factory.config;
 
 /**
  * 将Spring配置文件中的bean的定义转成Spring的内部数据结构
@@ -8,7 +8,7 @@ public interface BeanDefinition {
 
     /**
      * 获取类的完整包名
-     * @return
+     * @return String
      */
     String getBeanClassName();
 

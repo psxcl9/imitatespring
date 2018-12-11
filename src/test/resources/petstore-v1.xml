@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="petStore" class="org.imitationspring.service.v1.PetStoreService" >
+    <bean id="petStoreService" class="org.imitationspring.service.v1.PetStoreService" >
     </bean>
     <bean id="invalidBean" class="xxxxx.xxxx" >
     </bean>

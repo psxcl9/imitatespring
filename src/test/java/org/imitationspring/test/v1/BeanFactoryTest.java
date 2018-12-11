@@ -1,6 +1,6 @@
 package org.imitationspring.test.v1;
 
-import org.imitationspring.beans.BeanDefinition;
+import org.imitationspring.beans.factory.config.BeanDefinition;
 import org.imitationspring.beans.factory.BeanCreationException;
 import org.imitationspring.beans.factory.BeanDefinitionStoreException;
 import org.imitationspring.beans.factory.support.DefaultBeanFactory;
@@ -25,9 +25,9 @@ public class BeanFactoryTest {
     @Test
     public void testGetBean() {
         reader.loadBeanDefinitions("petstore-v1.xml");
-        BeanDefinition definition = factory.getBeanDefinition("petStore");
+        BeanDefinition definition = factory.getBeanDefinition("petStoreService");
         assertEquals("org.imitationspring.service.v1.PetStoreService", definition.getBeanClassName());
-        PetStoreService petStoreService = (PetStoreService) factory.getBean("petStore");
+        PetStoreService petStoreService = (PetStoreService) factory.getBean("petStoreService");
         assertNotNull(petStoreService);
     }
 
