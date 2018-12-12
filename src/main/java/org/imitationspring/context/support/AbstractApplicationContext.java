@@ -21,6 +21,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = getResourceByPath(configFile);
         reader.loadBeanDefinitions(resource);
+        //Spring中也是这样处理, 也是取得是默认ClassLoader
         factory.setBeanClassLoader(getBeanClassLoader());
     }
 

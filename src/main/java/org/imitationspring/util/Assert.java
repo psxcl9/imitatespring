@@ -1,6 +1,7 @@
 package org.imitationspring.util;
 
 /**
+ * 设置为abstract是为了防止Assert被new出来
  * @author liaocx
  */
 public abstract class Assert {

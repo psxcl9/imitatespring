@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 注册获取scope为singleton 的bean
+ * 注册获取scope为singleton的bean
  * @author liaocx
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {

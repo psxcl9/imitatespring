@@ -7,6 +7,7 @@ import java.io.InputStream;
  * @author liaocx
  */
 public interface Resource {
+
     /**
      * 获取对应资源的InputStream
      * @return InputStream

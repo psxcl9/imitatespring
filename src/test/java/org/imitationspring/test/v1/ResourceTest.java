@@ -33,7 +33,7 @@ public class ResourceTest {
 
     @Test
     public void testFileSystemResource() throws IOException {
-        Resource resource = new FileSystemResource("/Users/liaocx/IdeaProjects/imitationspring/src/test/resources/petstore-v1.xml");
+        Resource resource = new FileSystemResource("src/test/resources/petstore-v1.xml");
         InputStream is = null;
         try {
             is = resource.getInputStream();

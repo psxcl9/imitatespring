@@ -7,6 +7,7 @@ import org.imitationspring.beans.factory.BeanFactory;
  * @author liaocx
  */
 public interface ConfigurableBeanFactory extends BeanFactory {
+
     /**
      * 自定义ClassLoader
      * @param var
