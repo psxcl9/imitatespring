@@ -46,12 +46,13 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
             throw new BeanCreationException("BeanDefinition is not exist");
         }
         if (bd.isSingleton()) {
-            Object singletonBean = super.getSingleton(beanId);
-            if (singletonBean == null) {
-                singletonBean = createBean(bd);
-                super.registerSingleton(beanId, singletonBean);
+            //bean的scope是singleton
+            Object singletonInstance = super.getSingleton(beanId);
+            if (singletonInstance == null) {
+                singletonInstance = this.createBean(bd);
+                super.registerSingleton(beanId, singletonInstance);
             }
-            return singletonBean;
+            return singletonInstance;
         }
         return createBean(bd);
     }

@@ -12,7 +12,7 @@ import org.imitationspring.util.ClassUtils;
  */
 public abstract class AbstractApplicationContext implements ApplicationContext {
 
-    private DefaultBeanFactory factory = null;
+    private DefaultBeanFactory factory;
 
     private ClassLoader beanClassLoader;
 
