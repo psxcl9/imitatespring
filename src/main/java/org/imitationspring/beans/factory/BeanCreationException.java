@@ -3,10 +3,13 @@ package org.imitationspring.beans.factory;
 import org.imitationspring.beans.BeansException;
 
 /**
+ * 创建Bean出错时抛出异常
  * @author liaocx
  */
 public class BeanCreationException extends BeansException {
+
     private String beanName;
+
     public BeanCreationException(String msg) {
         super(msg);
 
