@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
 
 public class BeanFactoryTest {
 
-    DefaultBeanFactory factory = null;
-    XmlBeanDefinitionReader reader = null;
-    Resource resource = null;
+    private DefaultBeanFactory factory = null;
+    private XmlBeanDefinitionReader reader = null;
+    private Resource resource = null;
 
     @Before
     public void setUp() {
@@ -35,10 +35,10 @@ public class BeanFactoryTest {
         assertFalse(definition.isPrototype());
         assertEquals(BeanDefinition.SCOPE_DEFAULT, definition.getScope());
         assertEquals("org.imitatespring.service.v1.PetStore", definition.getBeanClassName());
-        PetStore petStoreService = (PetStore) factory.getBean("petStore");
-        assertNotNull(petStoreService);
-        PetStore petStoreService1 = (PetStore) factory.getBean("petStore");
-        assertTrue(petStoreService.equals(petStoreService1));
+        PetStore petStore = (PetStore) factory.getBean("petStore");
+        assertNotNull(petStore);
+        PetStore petStore1 = (PetStore) factory.getBean("petStore");
+        assertEquals(petStore, petStore1);
     }
 
     @Test
@@ -70,6 +70,6 @@ public class BeanFactoryTest {
         assertTrue(definition.isPrototype());
         Prototype prototype1 = (Prototype) factory.getBean("prototype");
         Prototype prototype2 = (Prototype) factory.getBean("prototype");
-        assertFalse(prototype1.equals(prototype2));
+        assertNotEquals(prototype1, prototype2);
     }
 }
