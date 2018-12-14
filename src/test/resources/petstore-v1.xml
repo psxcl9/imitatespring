@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="petStore" class="org.imitationspring.service.v1.PetStore" >
+    <bean id="petStore" class="org.imitatespring.service.v1.PetStore" >
     </bean>
     <bean id="invalidBean" class="xxxxx.xxxx" >
     </bean>
-    <bean id="prototype" class="org.imitationspring.service.v1.Prototype" scope="prototype">
+    <bean id="prototype" class="org.imitatespring.service.v1.Prototype" scope="prototype">
     </bean>
 </beans>
