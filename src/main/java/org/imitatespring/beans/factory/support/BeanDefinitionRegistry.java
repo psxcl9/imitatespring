@@ -15,7 +15,7 @@ public interface BeanDefinitionRegistry {
     BeanDefinition getBeanDefinition(String beanId);
 
     /**
-     *  仅用于注册BeanDefinition
+     * 仅用于注册BeanDefinition
      * @param beanId
      * @param bd
      */

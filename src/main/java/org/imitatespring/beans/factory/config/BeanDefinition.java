@@ -1,5 +1,9 @@
 package org.imitatespring.beans.factory.config;
 
+import org.imitatespring.beans.PropertyValue;
+
+import java.util.List;
+
 /**
  * 将Spring配置文件中的bean的定义转成Spring的内部数据结构
  * @author liaocx 
@@ -16,11 +20,33 @@ public interface BeanDefinition {
      */
     String getBeanClassName();
 
+    /**
+     * bean的作用域是否是单例
+     * @return
+     */
     boolean isSingleton();
 
+    /**
+     * bean的作用域是否是prototype
+     * @return
+     */
     boolean isPrototype();
 
+    /**
+     * 获取bean的作用域
+     * @return
+     */
     String getScope();
 
+    /**
+     * 设置bean的作用域
+     * @param scope
+     */
     void setScope(String scope);
+
+    /**
+     * 获取bean的property配置
+     * @return
+     */
+    List<PropertyValue> getPropertyValue();
 }

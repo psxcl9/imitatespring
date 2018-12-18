@@ -8,22 +8,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * @author liaocx
- */
 public class ApplicationContextTest {
 
     @Test
     public void getBeanFromClassPath() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("petstore-v1.xml");
-        PetStore petStore = (PetStore) ac.getBean("petStore");
+        ApplicationContext context = new ClassPathXmlApplicationContext("petstore-v1.xml");
+        PetStore petStore = (PetStore) context.getBean("petStore");
         assertNotNull(petStore);
     }
 
     @Test
     public void getBeanFromFileSystem() {
-        ApplicationContext ac = new FileSystemXmlApplicationContext("src/test/resources/petstore-v1.xml");
-        PetStore petStore = (PetStore) ac.getBean("petStore");
+        ApplicationContext context = new FileSystemXmlApplicationContext("src/test/resources/petstore-v1.xml");
+        PetStore petStore = (PetStore) context.getBean("petStore");
         assertNotNull(petStore);
     }
 }

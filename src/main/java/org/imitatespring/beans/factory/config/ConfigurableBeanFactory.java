@@ -3,7 +3,7 @@ package org.imitatespring.beans.factory.config;
 import org.imitatespring.beans.factory.BeanFactory;
 
 /**
- * 支持动态设置ClassLoader
+ * 支持自定义设置ClassLoader
  * @author liaocx
  */
 public interface ConfigurableBeanFactory extends BeanFactory {

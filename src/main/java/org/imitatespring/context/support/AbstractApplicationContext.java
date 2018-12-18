@@ -21,7 +21,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = getResourceByPath(configFile);
         reader.loadBeanDefinitions(resource);
-        //Spring中也是这样处理, 也是取得是默认ClassLoader
+        //Spring中也是这样处理, 没有提供set ClassLoader的入口, 取得是默认ClassLoader
         factory.setBeanClassLoader(getBeanClassLoader());
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     /**
-     *  不同实现类根据不同文件路径获取Resource对象
+     * 不同实现类根据不同文件路径获取Resource对象
      * @param path
      * @return
      */

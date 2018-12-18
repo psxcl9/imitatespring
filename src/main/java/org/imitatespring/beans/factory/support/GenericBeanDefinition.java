@@ -1,6 +1,10 @@
 package org.imitatespring.beans.factory.support;
 
+import org.imitatespring.beans.PropertyValue;
 import org.imitatespring.beans.factory.config.BeanDefinition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * bean在spring容器中的数据结构
@@ -10,7 +14,8 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private String id;
     private String beanClassName;
-    private String scope = BeanDefinition.SCOPE_DEFAULT;
+    private String scope = SCOPE_DEFAULT;
+    private List<PropertyValue> propertyValues = new ArrayList<>();
 
     public GenericBeanDefinition(String id, String beanClassName) {
         this.id = id;
@@ -30,6 +35,11 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    @Override
+    public List<PropertyValue> getPropertyValue() {
+        return this.propertyValues;
     }
 
     @Override
