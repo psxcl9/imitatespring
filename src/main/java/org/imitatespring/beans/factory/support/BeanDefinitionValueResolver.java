@@ -4,7 +4,7 @@ import org.imitatespring.beans.factory.config.RuntimeBeanReference;
 import org.imitatespring.beans.factory.config.TypedStringValue;
 
 /**
- * 将property中定义的ref值转成bean或者value
+ * 将property中定义的ref或value值转成bean或者value
  * @author liaocx
  */
 public class BeanDefinitionValueResolver {

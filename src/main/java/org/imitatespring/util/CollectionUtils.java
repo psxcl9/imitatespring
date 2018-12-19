@@ -11,6 +11,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 
+/**
+ * @author org.springframework.util
+ */
 public abstract class CollectionUtils {
 
     public CollectionUtils() {
@@ -37,7 +40,6 @@ public abstract class CollectionUtils {
             Object elem = var3[var5];
             collection.add((E) elem);
         }
-
     }
 
     public static <K, V> void mergePropertiesIntoMap(Properties props, Map<String, Object> map) {
@@ -64,7 +66,6 @@ public abstract class CollectionUtils {
                 }
             }
         }
-
         return false;
     }
 

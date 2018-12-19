@@ -1,6 +1,5 @@
 package org.imitatespring.util;
 
-
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -18,6 +17,9 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
+/**
+ * @author org.springframework.util
+ */
 public abstract class StringUtils {
 
     private static final String FOLDER_SEPARATOR = "/";
@@ -57,7 +59,6 @@ public abstract class StringUtils {
                 return true;
             }
         }
-
         return false;
     }
 

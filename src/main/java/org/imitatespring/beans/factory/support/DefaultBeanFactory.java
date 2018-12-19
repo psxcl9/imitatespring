@@ -1,10 +1,15 @@
 package org.imitatespring.beans.factory.support;
 
+import org.imitatespring.beans.PropertyValue;
 import org.imitatespring.beans.factory.config.BeanDefinition;
 import org.imitatespring.beans.factory.BeanCreationException;
 import org.imitatespring.beans.factory.config.ConfigurableBeanFactory;
 import org.imitatespring.util.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,6 +60,14 @@ import java.util.concurrent.ConcurrentHashMap;
     }
 
     private Object createBean(BeanDefinition bd) {
+        // 创建实例
+        Object bean = instantiateBean(bd);
+        // 设置属性,  如setter注入
+        populateBean(bd, bean);
+        return bean;
+    }
+
+    private Object instantiateBean(BeanDefinition bd) {
         String beanClassName = bd.getBeanClassName();
         ClassLoader cl = getBeanClassLoader();
         try {
@@ -65,6 +78,34 @@ import java.util.concurrent.ConcurrentHashMap;
             throw new BeanCreationException("create bean for " + beanClassName + " failed", e);
         }
     }
+
+    private void populateBean(BeanDefinition bd, Object bean) {
+        List<PropertyValue> pvs = bd.getPropertyValue();
+        if (pvs == null || pvs.isEmpty()) {
+            return;
+        }
+        BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        try {
+            for (PropertyValue pv : pvs) {
+                String propertyName = pv.getName();
+                Object assembleValue = pv.getValue();
+                //value or ref对应的bean
+                Object resolvedValue = resolver.resolveValueIfNecessary(assembleValue);
+                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                //属性的描述器, 每次循环都会获取bean中声明的所有属性, 将其和propertyName进行匹配, 命中就通过反射set值
+                PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds) {
+                    if (pd.getName().equals(propertyName)) {
+                        pd.getWriteMethod().invoke(bean, resolvedValue);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
+        }
+    }
+
 
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {

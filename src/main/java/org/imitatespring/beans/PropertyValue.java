@@ -9,7 +9,6 @@ import org.imitatespring.util.Assert;
 public class PropertyValue {
 
     private final String name;
-
     /**
      * 将ref或者value封装成一个对象
      */

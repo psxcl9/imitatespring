@@ -6,7 +6,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author org.springframework.util
+ */
 public abstract class ObjectUtils {
+
     private static final int INITIAL_HASH = 7;
     private static final int MULTIPLIER = 31;
     private static final String EMPTY_STRING = "";
@@ -609,10 +613,8 @@ public abstract class ObjectUtils {
                     } else {
                         sb.append(", ");
                     }
-
                     sb.append(array[i]);
                 }
-
                 sb.append("}");
                 return sb.toString();
             }
