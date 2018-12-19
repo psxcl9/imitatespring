@@ -71,6 +71,7 @@ public class XmlBeanDefinitionReader {
             Element beans = doc.getRootElement();
             Iterator<Element> iterator = beans.elementIterator();
             while (iterator.hasNext()) {
+                //为每个bean创建对应的BeanDefinition对象
                 Element bean = iterator.next();
                 String id = bean.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = bean.attributeValue(CLASS_ATTRIBUTE);
@@ -78,7 +79,7 @@ public class XmlBeanDefinitionReader {
                 if (bean.attribute(SCOPE_ATTRIBUTE) != null) {
                     bd.setScope(bean.attributeValue(SCOPE_ATTRIBUTE));
                 }
-                //解析property
+                //解析bean中的所有property
                 parsePropertyElement(bean, bd);
                 registry.registerBeanDefinition(id, bd);
             }

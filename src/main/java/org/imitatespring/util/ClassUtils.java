@@ -1,9 +1,42 @@
 package org.imitatespring.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author org.springframework.util
  */
 public abstract class ClassUtils {
+
+    /**
+     * Map with primitive wrapper type as key and corresponding primitive
+     * type as value, for example: Integer.class -> int.class.
+     */
+    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new HashMap<Class<?>, Class<?>>(8);
+
+    /**
+     * Map with primitive type as key and corresponding wrapper
+     * type as value, for example: int.class -> Integer.class.
+     */
+    private static final Map<Class<?>, Class<?>> primitiveTypeToWrapperMap = new HashMap<Class<?>, Class<?>>(8);
+
+    static {
+        primitiveWrapperTypeMap.put(Boolean.class, boolean.class);
+        primitiveWrapperTypeMap.put(Byte.class, byte.class);
+        primitiveWrapperTypeMap.put(Character.class, char.class);
+        primitiveWrapperTypeMap.put(Double.class, double.class);
+        primitiveWrapperTypeMap.put(Float.class, float.class);
+        primitiveWrapperTypeMap.put(Integer.class, int.class);
+        primitiveWrapperTypeMap.put(Long.class, long.class);
+        primitiveWrapperTypeMap.put(Short.class, short.class);
+
+        for (Map.Entry<Class<?>, Class<?>> entry : primitiveWrapperTypeMap.entrySet()) {
+            primitiveTypeToWrapperMap.put(entry.getValue(), entry.getKey());
+
+        }
+
+    }
+
     public static ClassLoader getDefaultClassLoader() {
         ClassLoader cl = null;
         try {
@@ -26,5 +59,33 @@ public abstract class ClassUtils {
             }
         }
         return cl;
+    }
+
+    public static boolean isAssignableValue(Class<?> type, Object value) {
+        Assert.notNull(type, "Type must not be null");
+        return value != null ? isAssignable(type, value.getClass()) : !type.isPrimitive();
+    }
+
+    public static boolean isAssignable(Class<?> lhsType, Class<?> rhsType) {
+        Assert.notNull(lhsType, "Left-hand side type must not be null");
+        Assert.notNull(rhsType, "Right-hand side type must not be null");
+        if (lhsType.isAssignableFrom(rhsType)) {
+            return true;
+        } else {
+            Class resolvedPrimitive;
+            if (lhsType.isPrimitive()) {
+                resolvedPrimitive = (Class)primitiveWrapperTypeMap.get(rhsType);
+                if (lhsType == resolvedPrimitive) {
+                    return true;
+                }
+            } else {
+                resolvedPrimitive = (Class)primitiveTypeToWrapperMap.get(rhsType);
+                if (resolvedPrimitive != null && lhsType.isAssignableFrom(resolvedPrimitive)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -7,6 +7,8 @@
     <bean id="petStore" class="org.imitatespring.service.v2.PetStore" >
         <property name="accountDao" ref="accountDao"/>
         <property name="itemDao" ref="itemDao"/>
+        <property name="author" value="liaocx"/>
+        <property name="age" value="24"/>
     </bean>
 
     <bean id="accountDao" class="org.imitatespring.dao.v2.AccountDao" >

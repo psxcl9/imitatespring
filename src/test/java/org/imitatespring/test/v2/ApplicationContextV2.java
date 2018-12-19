@@ -18,5 +18,7 @@ public class ApplicationContextV2 {
         assertNotNull(petStore.getItemDao());
         assertTrue(petStore.getAccountDao() instanceof AccountDao);
         assertTrue(petStore.getItemDao() instanceof ItemDao);
+        assertEquals("liaocx", petStore.getAuthor());
+        assertEquals(24, petStore.getAge());
     }
 }

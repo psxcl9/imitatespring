@@ -1,6 +1,8 @@
 package org.imitatespring.beans.factory.support;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.imitatespring.beans.PropertyValue;
+import org.imitatespring.beans.SimpleTypeConverter;
 import org.imitatespring.beans.factory.config.BeanDefinition;
 import org.imitatespring.beans.factory.BeanCreationException;
 import org.imitatespring.beans.factory.config.ConfigurableBeanFactory;
@@ -64,6 +66,8 @@ import java.util.concurrent.ConcurrentHashMap;
         Object bean = instantiateBean(bd);
         // 设置属性,  如setter注入
         populateBean(bd, bean);
+        //使用commons-beanutils封装的方法直接setproperty中声明的值
+        //populateBeanUseCommonBeanUtils(bd, bean);
         return bean;
     }
 
@@ -80,11 +84,14 @@ import java.util.concurrent.ConcurrentHashMap;
     }
 
     private void populateBean(BeanDefinition bd, Object bean) {
+        //取出这个bean中所有的propertyValue, 也有可能没有
         List<PropertyValue> pvs = bd.getPropertyValue();
         if (pvs == null || pvs.isEmpty()) {
             return;
         }
         BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        SimpleTypeConverter converter = new SimpleTypeConverter();
+
         try {
             for (PropertyValue pv : pvs) {
                 String propertyName = pv.getName();
@@ -96,13 +103,34 @@ import java.util.concurrent.ConcurrentHashMap;
                 PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd.getName().equals(propertyName)) {
-                        pd.getWriteMethod().invoke(bean, resolvedValue);
+                        Object convertedValue = converter.convertIfNecessary(resolvedValue, pd.getPropertyType());
+                        pd.getWriteMethod().invoke(bean, convertedValue);
                         break;
                     }
                 }
             }
         } catch (Exception ex) {
-            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", ex);
+        }
+    }
+
+    private void populateBeanUseCommonBeanUtils(BeanDefinition bd, Object bean) {
+        //取出这个bean中所有的propertyValue, 也有可能没有
+        List<PropertyValue> pvs = bd.getPropertyValue();
+        if (pvs == null || pvs.isEmpty()) {
+            return;
+        }
+        BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        try {
+            for (PropertyValue pv : pvs) {
+                String propertyName = pv.getName();
+                Object assembleValue = pv.getValue();
+                //value or ref对应的bean
+                Object resolvedValue = resolver.resolveValueIfNecessary(assembleValue);
+                BeanUtils.setProperty(bean, propertyName, resolvedValue);
+            }
+        } catch (Exception ex) {
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]", ex);
         }
     }
 

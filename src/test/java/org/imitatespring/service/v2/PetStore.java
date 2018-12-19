@@ -11,6 +11,8 @@ public class PetStore {
 
     private String author;
 
+    private int age;
+
     public AccountDao getAccountDao() {
         return accountDao;
     }
@@ -33,5 +35,13 @@ public class PetStore {
 
     public String getAuthor() {
         return author;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
