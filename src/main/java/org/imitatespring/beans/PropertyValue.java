@@ -10,12 +10,16 @@ public class PropertyValue {
 
     private final String name;
     /**
-     * 将ref或者value封装成一个对象
+     * 将ref或者value封装成一个对象, 目前是RuntimeBeanReference或TypedStringValue
      */
     private final Object value;
-
+    /**
+     * 是否已经将封装的value对象转换成一个对应的bean或者属性值, 例如是否从RuntimeBeanReference变成一个真正的bean实例
+     */
     private boolean converted = false;
-
+    /**
+     * 被转换过后的实际值, 和 converted 属性配合使用
+     */
     private Object convertedValue;
 
     public PropertyValue(String name, Object value) {
