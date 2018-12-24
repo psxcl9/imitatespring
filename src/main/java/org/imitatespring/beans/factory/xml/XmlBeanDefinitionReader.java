@@ -96,7 +96,7 @@ public class XmlBeanDefinitionReader {
         }
     }
 
-    public void parsePropertyElement(Element beanElem, BeanDefinition bd) {
+    private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
         //取一个bean中所有的property
         Iterator propertys = beanElem.elementIterator(PROPERTY_ELEMENT);
         while (propertys.hasNext()) {
@@ -120,7 +120,7 @@ public class XmlBeanDefinitionReader {
      * @param propertyName
      * @return
      */
-    public Object parsePropertyValue(Element ele, BeanDefinition bd, String propertyName) {
+    private Object parsePropertyValue(Element ele, BeanDefinition bd, String propertyName) {
         String elementName = (propertyName != null) ? "<property> element for property '" + propertyName + "'" :
                             "<constructor-arg> element";
 
@@ -141,6 +141,5 @@ public class XmlBeanDefinitionReader {
             throw new RuntimeException(elementName + " must specify a ref or value");
         }
     }
-
 
 }
