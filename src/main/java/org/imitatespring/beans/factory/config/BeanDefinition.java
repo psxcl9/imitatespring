@@ -1,5 +1,6 @@
 package org.imitatespring.beans.factory.config;
 
+import org.imitatespring.beans.ConstructorArgument;
 import org.imitatespring.beans.PropertyValue;
 
 import java.util.List;
@@ -49,4 +50,10 @@ public interface BeanDefinition {
      * @return
      */
     List<PropertyValue> getPropertyValue();
+
+    /**
+     * 获取bean的constructor配置
+     * @return
+     */
+    ConstructorArgument getConstructorArgument();
 }

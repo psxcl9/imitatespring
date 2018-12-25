@@ -6,6 +6,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.imitatespring.beans.ConstructorArgument;
 import org.imitatespring.beans.PropertyValue;
 import org.imitatespring.beans.factory.BeanDefinitionStoreException;
 import org.imitatespring.beans.factory.config.BeanDefinition;
@@ -46,6 +47,9 @@ public class XmlBeanDefinitionReader {
 
     public static final String NAME_ATTRIBUTE = "name";
 
+    public static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
+
+    public static final String TYPE_ATTRIBUTE = "type";
 
     private BeanDefinitionRegistry registry;
 
@@ -79,6 +83,8 @@ public class XmlBeanDefinitionReader {
                 if (bean.attribute(SCOPE_ATTRIBUTE) != null) {
                     bd.setScope(bean.attributeValue(SCOPE_ATTRIBUTE));
                 }
+                //解析bean中的constructor
+                parseConstructorArgElements(bean, bd);
                 //解析bean中的所有property
                 parsePropertyElement(bean, bd);
                 registry.registerBeanDefinition(id, bd);
@@ -94,6 +100,29 @@ public class XmlBeanDefinitionReader {
                 }
             }
         }
+    }
+
+    private void parseConstructorArgElements(Element bean, BeanDefinition bd) {
+        Iterator args = bean.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+        while (args.hasNext()) {
+            Element arg = (Element) args.next();
+            parseConstructorArgElement(arg, bd);
+        }
+    }
+
+    private void parseConstructorArgElement(Element arg, BeanDefinition bd) {
+        String typeAttr = arg.attributeValue(TYPE_ATTRIBUTE);
+        String nameAttr = arg.attributeValue(NAME_ATTRIBUTE);
+        Object value = parsePropertyValue(arg, bd, null);
+        ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+        if (StringUtils.hasLength(typeAttr)) {
+            valueHolder.setType(typeAttr);
+        }
+        if (StringUtils.hasLength(nameAttr)) {
+            valueHolder.setName(nameAttr);
+        }
+
+        bd.getConstructorArgument().addArgumentValue(valueHolder);
     }
 
     private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
@@ -112,6 +141,7 @@ public class XmlBeanDefinitionReader {
             bd.getPropertyValue().add(pv);
         }
     }
+
 
     /**
      * 将ref或value封装成一个RuntimeBeanReference对象或者TypedStringValue对象

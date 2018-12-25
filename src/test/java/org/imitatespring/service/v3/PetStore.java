@@ -11,27 +11,21 @@ public class PetStore {
 
     private int age;
 
-    public AccountDao getAccountDao() {
-        return accountDao;
+    public PetStore(AccountDao accountDao, ItemDao itemDao, int age) {
+        this.accountDao = accountDao;
+        this.itemDao = itemDao;
+        this.age = age;
     }
 
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    public AccountDao getAccountDao() {
+        return accountDao;
     }
 
     public ItemDao getItemDao() {
         return itemDao;
     }
 
-    public void setItemDao(ItemDao itemDao) {
-        this.itemDao = itemDao;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 }

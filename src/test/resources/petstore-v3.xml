@@ -5,9 +5,9 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="petStore" class="org.imitatespring.service.v3.PetStore" >
-        <property name="accountDao" ref="accountDao"/>
-        <property name="itemDao" ref="itemDao"/>
-        <property name="age" value="24"/>
+        <constructor-arg name="accountDao" ref="accountDao"/>
+        <constructor-arg name="itemDao" ref="itemDao"/>
+        <constructor-arg name="age" value="24"/>
     </bean>
 
     <bean id="accountDao" class="org.imitatespring.dao.v3.AccountDao" >

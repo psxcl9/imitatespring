@@ -1,5 +1,6 @@
 package org.imitatespring.beans.factory.support;
 
+import org.imitatespring.beans.ConstructorArgument;
 import org.imitatespring.beans.PropertyValue;
 import org.imitatespring.beans.factory.config.BeanDefinition;
 
@@ -13,9 +14,14 @@ import java.util.List;
 public class GenericBeanDefinition implements BeanDefinition {
 
     private String id;
+
     private String beanClassName;
+
     private String scope = SCOPE_DEFAULT;
+
     private List<PropertyValue> propertyValues = new ArrayList<>();
+
+    private ConstructorArgument args = new ConstructorArgument();
 
     public GenericBeanDefinition(String id, String beanClassName) {
         this.id = id;
@@ -40,6 +46,11 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public List<PropertyValue> getPropertyValue() {
         return this.propertyValues;
+    }
+
+    @Override
+    public ConstructorArgument getConstructorArgument() {
+        return this.args;
     }
 
     @Override
