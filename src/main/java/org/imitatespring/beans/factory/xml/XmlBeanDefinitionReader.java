@@ -29,15 +29,13 @@ public class XmlBeanDefinitionReader {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-
     public static final String ID_ATTRIBUTE = "id";
 
     public static final String CLASS_ATTRIBUTE = "class";
 
     public static final String SCOPE_ATTRIBUTE = "scope";
-
     /**
-     * property相关的属性值
+     * property和constructor-arg相关的属性值
      */
     public static final String PROPERTY_ELEMENT = "property";
 
@@ -58,7 +56,8 @@ public class XmlBeanDefinitionReader {
     }
 
     /**
-     *  解析Resource对象
+     * 解析Resource对象, 装配bean
+     * @param resource
      */
     public void loadBeanDefinitions(Resource resource) {
         InputStream is = null;
@@ -102,7 +101,13 @@ public class XmlBeanDefinitionReader {
         }
     }
 
+    /**
+     * 解析bean中构造器的所有constructor-arg
+     * @param bean
+     * @param bd
+     */
     private void parseConstructorArgElements(Element bean, BeanDefinition bd) {
+        //获取一个bean中所有的constructor-arg
         Iterator args = bean.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
         while (args.hasNext()) {
             Element arg = (Element) args.next();
@@ -110,6 +115,11 @@ public class XmlBeanDefinitionReader {
         }
     }
 
+    /**
+     * 将constructor-arg中的参数组装成ConstructorArgument对象
+     * @param arg
+     * @param bd
+     */
     private void parseConstructorArgElement(Element arg, BeanDefinition bd) {
         String typeAttr = arg.attributeValue(TYPE_ATTRIBUTE);
         String nameAttr = arg.attributeValue(NAME_ATTRIBUTE);
@@ -125,6 +135,11 @@ public class XmlBeanDefinitionReader {
         bd.getConstructorArgument().addArgumentValue(valueHolder);
     }
 
+    /**
+     * 解析bean的所有property
+     * @param beanElem
+     * @param bd
+     */
     private void parsePropertyElement(Element beanElem, BeanDefinition bd) {
         //取一个bean中所有的property
         Iterator propertys = beanElem.elementIterator(PROPERTY_ELEMENT);
@@ -136,12 +151,12 @@ public class XmlBeanDefinitionReader {
                 logger.fatal("Tag 'property' must have a 'name' attribute");
                 return;
             }
+            //将ref或者value属性封装成PropertyValue对象
             Object value = parsePropertyValue(propElem, bd, propertyName);
             PropertyValue pv = new PropertyValue(propertyName, value);
             bd.getPropertyValue().add(pv);
         }
     }
-
 
     /**
      * 将ref或value封装成一个RuntimeBeanReference对象或者TypedStringValue对象

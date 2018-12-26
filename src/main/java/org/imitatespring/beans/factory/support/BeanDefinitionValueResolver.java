@@ -1,15 +1,16 @@
 package org.imitatespring.beans.factory.support;
 
+import org.imitatespring.beans.factory.BeanFactory;
 import org.imitatespring.beans.factory.config.RuntimeBeanReference;
 import org.imitatespring.beans.factory.config.TypedStringValue;
 
 /**
- * 将property中定义的ref或value值转成bean或者value
+ * 将封装成PropertyValue对象转化成对应的bean或者value值
  * @author liaocx
  */
 public class BeanDefinitionValueResolver {
 
-    private final DefaultBeanFactory beanFactory;
+    private final BeanFactory beanFactory;
 
     public BeanDefinitionValueResolver(DefaultBeanFactory beanFactory) {
         this.beanFactory = beanFactory;

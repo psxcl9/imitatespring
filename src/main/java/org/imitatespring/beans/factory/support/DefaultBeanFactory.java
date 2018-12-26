@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 底层的bean工厂, 用于注册bean的Definition, 获取bean实例以及Definition
  * @author liaocx
  */
-    public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
