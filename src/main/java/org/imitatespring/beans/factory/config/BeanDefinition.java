@@ -56,4 +56,16 @@ public interface BeanDefinition {
      * @return
      */
     ConstructorArgument getConstructorArgument();
+
+    /**
+     * 获取beanId
+     * @return
+     */
+    String getId();
+
+    /**
+     * 判断是否存在有参构造器
+     * @return
+     */
+    boolean hasConstructorArgumentValues();
 }

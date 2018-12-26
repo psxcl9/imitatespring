@@ -1,6 +1,7 @@
 package org.imitatespring.test.v3;
 
 import org.imitatespring.beans.factory.config.BeanDefinition;
+import org.imitatespring.beans.factory.support.ConstructorResolver;
 import org.imitatespring.beans.factory.support.DefaultBeanFactory;
 import org.imitatespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.imitatespring.core.io.ClassPathResource;

@@ -55,6 +55,16 @@ public class GenericBeanDefinition implements BeanDefinition {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public boolean hasConstructorArgumentValues() {
+        return !this.args.isEmpty();
+    }
+
+    @Override
     public boolean isSingleton() {
         return SCOPE_SINGLETON.equals(this.scope) || SCOPE_DEFAULT.equals(this.scope);
     }

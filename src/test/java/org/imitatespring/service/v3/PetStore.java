@@ -17,6 +17,12 @@ public class PetStore {
         this.age = age;
     }
 
+    public PetStore(AccountDao accountDao, ItemDao itemDao) {
+        this.accountDao = accountDao;
+        this.itemDao = itemDao;
+        this.age = -1;
+    }
+
     public AccountDao getAccountDao() {
         return accountDao;
     }

@@ -7,6 +7,10 @@ import org.imitatespring.beans.propertyeditors.CustomBooleanEditor;
 import org.imitatespring.beans.propertyeditors.CustomNumberEditor;
 import org.imitatespring.util.ClassUtils;
 
+/**
+ * 类型转化, 如果是定义的各种bean的引用数据类型, 直接返回
+ * @author liaocx
+ */
 public class SimpleTypeConverter implements TypeConverter {
 
     private Map<Class<?>, PropertyEditor> defaultEditors;
@@ -17,7 +21,7 @@ public class SimpleTypeConverter implements TypeConverter {
 
     @Override
     public <T> T convertIfNecessary(Object value, Class<T> requiredType) throws TypeMismatchException {
-
+        //判断传入的value值的类型和requiredType是否匹配
         if(ClassUtils.isAssignableValue(requiredType, value)){
             return (T)value;
         } else{
@@ -35,7 +39,7 @@ public class SimpleTypeConverter implements TypeConverter {
         }
     }
     private PropertyEditor findDefaultEditor(Class<?> requiredType) {
-        PropertyEditor editor = this.getDefaultEditor(requiredType);
+        PropertyEditor editor = getDefaultEditor(requiredType);
         if(editor == null){
             throw new RuntimeException("Editor for " + requiredType + " has not been implemented");
         }

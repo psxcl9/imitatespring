@@ -84,7 +84,6 @@ public abstract class ClassUtils {
                     return true;
                 }
             }
-
             return false;
         }
     }

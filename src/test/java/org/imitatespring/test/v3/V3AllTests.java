@@ -5,7 +5,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BeanDefinitionTestV3.class
+        ApplicationContextV3.class,
+        BeanDefinitionTestV3.class,
+        ConstructorResolverTest.class
 })
 public class V3AllTests {
 }
