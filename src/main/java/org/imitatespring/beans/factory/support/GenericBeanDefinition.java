@@ -21,6 +21,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private List<PropertyValue> propertyValues = new ArrayList<>();
 
+    //最开始这个属性没有初始化, 导致通过它addArgumentValue时报NullPoint异常
     private ConstructorArgument args = new ConstructorArgument();
 
     public GenericBeanDefinition(String id, String beanClassName) {
