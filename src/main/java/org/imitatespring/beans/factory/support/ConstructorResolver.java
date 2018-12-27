@@ -29,14 +29,15 @@ public class ConstructorResolver {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
         Class<?> beanClass = null;
+        beanClass = bd.getBeanClass();
         //获取一个beanId的完整包名
-        String className = bd.getBeanClassName();
-        try {
-            //获取这个bean的Class对象
-            beanClass = beanFactory.getBeanClassLoader().loadClass(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        String className = bd.getBeanClassName();
+//        try {
+//            //获取这个bean的Class对象
+//            beanClass = beanFactory.getBeanClassLoader().loadClass(className);
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         //通过反射获取这个bean的所有Constructor
         Constructor<?>[] candidates = beanClass.getConstructors();
 

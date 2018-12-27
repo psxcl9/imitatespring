@@ -1,5 +1,6 @@
 package org.imitatespring.util;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,4 +88,5 @@ public abstract class ClassUtils {
             return false;
         }
     }
+
 }
