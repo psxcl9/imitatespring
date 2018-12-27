@@ -123,7 +123,7 @@ public class XmlBeanDefinitionReader {
     private void parseConstructorArgElement(Element arg, BeanDefinition bd) {
         String typeAttr = arg.attributeValue(TYPE_ATTRIBUTE);
         String nameAttr = arg.attributeValue(NAME_ATTRIBUTE);
-        Object value = parsePropertyValue(arg, bd, null);
+        Object value = parsePropertyValue(arg, null);
         ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
         if (StringUtils.hasLength(typeAttr)) {
             valueHolder.setType(typeAttr);
@@ -152,7 +152,7 @@ public class XmlBeanDefinitionReader {
                 return;
             }
             //将ref或者value属性封装成PropertyValue对象
-            Object value = parsePropertyValue(propElem, bd, propertyName);
+            Object value = parsePropertyValue(propElem, propertyName);
             PropertyValue pv = new PropertyValue(propertyName, value);
             bd.getPropertyValue().add(pv);
         }
@@ -161,11 +161,10 @@ public class XmlBeanDefinitionReader {
     /**
      * 将ref或value封装成一个RuntimeBeanReference对象或者TypedStringValue对象
      * @param ele
-     * @param bd
      * @param propertyName
      * @return
      */
-    private Object parsePropertyValue(Element ele, BeanDefinition bd, String propertyName) {
+    private Object parsePropertyValue(Element ele, String propertyName) {
         String elementName = (propertyName != null) ? "<property> element for property '" + propertyName + "'" :
                             "<constructor-arg> element";
 

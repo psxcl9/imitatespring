@@ -1,7 +1,7 @@
 package org.imitatespring.beans;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,8 +10,7 @@ import java.util.List;
  */
 public class ConstructorArgument {
 
-    private final List<ValueHolder> argumentValues = new LinkedList<>();
-
+    private final List<ValueHolder> argumentValues = new ArrayList<>();
     /**
      * Create a new empty ConstructorArgumentValues object.
      */

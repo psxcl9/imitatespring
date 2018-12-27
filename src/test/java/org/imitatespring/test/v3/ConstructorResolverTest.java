@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * 正确选择构造器测试
+ * 找到一个匹配的构造器测试
  * @author liaocx
  */
 public class ConstructorResolverTest {
