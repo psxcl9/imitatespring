@@ -18,6 +18,16 @@ import org.junit.Test;
 public class ConstructorResolverTest {
 
     @Test
+    public void testResolveBeanClass() {
+        DefaultBeanFactory factory = new DefaultBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+        reader.loadBeanDefinitions(new ClassPathResource("petstore-v3.xml"));
+
+        BeanDefinition bd = factory.getBeanDefinition("petStore");
+        bd.resolveBeanClass(factory.getBeanClassLoader());
+    }
+
+    @Test
     public void testAutowireConstructor() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);

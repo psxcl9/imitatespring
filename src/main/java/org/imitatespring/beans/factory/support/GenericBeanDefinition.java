@@ -2,8 +2,8 @@ package org.imitatespring.beans.factory.support;
 
 import org.imitatespring.beans.ConstructorArgument;
 import org.imitatespring.beans.PropertyValue;
+import org.imitatespring.beans.factory.BeanCreationException;
 import org.imitatespring.beans.factory.config.BeanDefinition;
-import org.imitatespring.util.ClassUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,35 +78,29 @@ public class GenericBeanDefinition implements BeanDefinition {
         return SCOPE_PROTOTYPE.equals(this.scope);
     }
 
-
-
-//    public Class<?> getBeanClass() throws IllegalStateException {
-//        Object beanClassObject = this.beanClass;
-//        if (beanClassObject == null) {
-//            throw new IllegalStateException("No bean class specified on bean definition");
-//        } else if (!(beanClassObject instanceof Class)) {
-//            throw new IllegalStateException("Bean class name [" + beanClassObject + "] has not been resolved into an actual Class");
-//        } else {
-//            return (Class)beanClassObject;
-//        }
-//    }
-
+    @Override
     public void setBeanClass(Class<?> beanClass) {
         this.beanClass = beanClass;
     }
+
     @Override
-    public Class<?> getBeanClass() throws IllegalStateException {
+    public Class<?> getBeanClass() {
         return this.beanClass;
     }
+
     @Override
-    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+    public Class<?> resolveBeanClass(ClassLoader classLoader) {
         String className = this.getBeanClassName();
-        Class<?> resolvedClass = null;
+        Class<?> resolvedClass;
         Class<?> cacheBeanClass = this.getBeanClass();
         if (Objects.isNull(cacheBeanClass)) {
-            //重新加载并更新缓存
-            resolvedClass = classLoader.loadClass(className);
-            setBeanClass(resolvedClass);
+            //加载并更新缓存
+            try {
+                resolvedClass = classLoader.loadClass(className);
+                setBeanClass(resolvedClass);
+            } catch (ClassNotFoundException e) {
+                throw new BeanCreationException(className, "the class was not found", e);
+            }
         } else {
             //取已缓存的clazz
             resolvedClass = cacheBeanClass;

@@ -72,14 +72,6 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
     }
 
     private Object instantiateBean(BeanDefinition bd) {
-        //加载一次beanClass对象, 将其存入缓存
-        try {
-            bd.resolveBeanClass(getBeanClassLoader());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
         if (bd.hasConstructorArgumentValues()) {
             //存在有参构造器
             ConstructorResolver resolver = new ConstructorResolver(this);
@@ -88,7 +80,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
             //使用默认的无参构造函数
             String beanClassName = bd.getBeanClassName();
             try {
-//                Class<?> clz = getBeanClassLoader().loadClass(beanClassName);
+                //加载一次beanClass对象, 将其存入缓存
+                bd.resolveBeanClass(getBeanClassLoader());
                 Class<?> clz = bd.getBeanClass();
                 //默认有个无参的构造函数
                 return clz.newInstance();

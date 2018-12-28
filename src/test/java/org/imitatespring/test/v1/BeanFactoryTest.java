@@ -31,6 +31,8 @@ public class BeanFactoryTest {
     public void testGetBean() {
         reader.loadBeanDefinitions(resource);
         BeanDefinition definition = factory.getBeanDefinition("petStore");
+        //getBean的时候才会加载beanClass对象
+        assertNull(definition.getBeanClass());
         assertTrue(definition.isSingleton());
         assertFalse(definition.isPrototype());
         assertEquals(BeanDefinition.SCOPE_DEFAULT, definition.getScope());

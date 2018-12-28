@@ -28,19 +28,9 @@ public class ConstructorResolver {
     public Object autowireConstructor(final BeanDefinition bd) {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
-        Class<?> beanClass = null;
-        beanClass = bd.getBeanClass();
-        //获取一个beanId的完整包名
-//        String className = bd.getBeanClassName();
-//        try {
-//            //获取这个bean的Class对象
-//            beanClass = beanFactory.getBeanClassLoader().loadClass(className);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        Class<?> beanClass = bd.resolveBeanClass(beanFactory.getBeanClassLoader());
         //通过反射获取这个bean的所有Constructor
         Constructor<?>[] candidates = beanClass.getConstructors();
-
         //用于将构造器参数中的ref转换成相应的对象
         BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this.beanFactory);
         //用于将构造器参数中的value转换成对应的值 int/boolean
@@ -65,7 +55,6 @@ public class ConstructorResolver {
                 break;
             }
         }
-
         //找不到合适的构造函数
         if (constructorToUse == null) {
             throw new BeanCreationException(bd.getId(), "can't find a appropriate constructor ");

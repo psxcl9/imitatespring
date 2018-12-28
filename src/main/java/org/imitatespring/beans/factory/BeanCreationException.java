@@ -12,8 +12,8 @@ public class BeanCreationException extends BeansException {
 
     public BeanCreationException(String msg) {
         super(msg);
-
     }
+
     public BeanCreationException(String msg, Throwable cause) {
         super(msg, cause);
     }
@@ -27,6 +27,7 @@ public class BeanCreationException extends BeansException {
         this(beanName, msg);
         initCause(cause);
     }
+
     public String getBeanName(){
         return this.beanName;
     }

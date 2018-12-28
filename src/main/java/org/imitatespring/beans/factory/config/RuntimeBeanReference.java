@@ -5,7 +5,6 @@ package org.imitatespring.beans.factory.config;
  * @author liaocx
  */
 public class RuntimeBeanReference {
-
     /**
      * <property name="xxxbeanName" ref="xxxbeanId"/>中的ref
      */
