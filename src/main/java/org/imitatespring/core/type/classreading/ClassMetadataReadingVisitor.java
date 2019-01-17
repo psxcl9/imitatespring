@@ -1,5 +1,6 @@
 package org.imitatespring.core.type.classreading;
 
+import org.imitatespring.core.type.ClassMetadata;
 import org.imitatespring.util.ClassUtils;
 import org.imitatespring.util.StringUtils;
 import org.springframework.asm.ClassVisitor;
@@ -10,7 +11,7 @@ import org.springframework.asm.SpringAsmInfo;
  * Class元数据解析
  * @author liaocx
  */
-public class ClassMetadataReadingVisitor extends ClassVisitor {
+public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata {
 
     private String className;
 
@@ -52,15 +53,17 @@ public class ClassMetadataReadingVisitor extends ClassVisitor {
         }
     }
 
-
+    @Override
     public String getClassName() {
         return className;
     }
 
+    @Override
     public boolean isInterface() {
         return isInterface;
     }
 
+    @Override
     public boolean isAbstract() {
         return isAbstract;
     }
@@ -69,19 +72,23 @@ public class ClassMetadataReadingVisitor extends ClassVisitor {
         return !(this.isInterface || this.isAbstract);
     }
 
+    @Override
     public boolean isFinal() {
         return isFinal;
     }
 
+    @Override
     public boolean hasSuperClass() {
         return (this.superClassName != null);
     }
 
+    @Override
     public String getSuperClassName() {
         return superClassName;
     }
 
-    public String[] getInterfaces() {
+    @Override
+    public String[] getInterfaceNames() {
         return interfaces;
     }
 }

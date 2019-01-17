@@ -1,6 +1,7 @@
 package org.imitatespring.core.type.classreading;
 
 import org.imitatespring.core.annotation.AnnotationAttributes;
+import org.imitatespring.core.type.AnnotationMetadata;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.Type;
 
@@ -13,7 +14,7 @@ import java.util.Set;
  * 解析所有的注解
  * @author liaocx
  */
-public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor {
+public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata {
 
     /**
      * 所有注解的集合
@@ -44,6 +45,7 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
         return attributesReadingVisitor;
     }
 
+    @Override
     public Set<String> getAnnotationTypes() {
         return this.annotationSet;
     }
@@ -52,10 +54,12 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
      * @param annotationType 注解的全类名
      * @return
      */
+    @Override
     public boolean hasAnnotation(String annotationType) {
         return this.annotationSet.contains(annotationType);
     }
 
+    @Override
     public AnnotationAttributes getAnnotationAttributes(String annotationType) {
         return this.attributeMap.get(annotationType);
     }
