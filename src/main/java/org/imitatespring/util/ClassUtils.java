@@ -89,4 +89,14 @@ public abstract class ClassUtils {
         }
     }
 
+    public static String convertClassNameToResourcePath(String className) {
+        Assert.notNull(className, "Class name must not be null");
+        return className.replace('.', '/');
+    }
+
+    public static String convertResourcePathToClassName(String resourcePath) {
+        Assert.notNull(resourcePath, "Resource path must not be null");
+        return resourcePath.replace('/', '.');
+    }
+
 }
