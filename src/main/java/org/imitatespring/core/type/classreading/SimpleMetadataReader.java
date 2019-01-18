@@ -10,8 +10,11 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class SimpleMetadataReader implements MetadataReader {
+
     private final Resource resource;
+
     private final ClassMetadata classMetadata;
+
     private final AnnotationMetadata annotationMetadata;
 
     public SimpleMetadataReader(Resource resource) throws IOException {
@@ -27,7 +30,9 @@ public class SimpleMetadataReader implements MetadataReader {
         }
         AnnotationMetadataReadingVisitor visitor = new AnnotationMetadataReadingVisitor();
         classReader.accept(visitor, ClassReader.SKIP_DEBUG);
+        //此处所有的数据都被visitor拿到
         this.annotationMetadata = visitor;
+        //classMetadata也取得是一个AnnotationMetadataReadingVisitor对象
         this.classMetadata = visitor;
         this.resource = resource;
     }

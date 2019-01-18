@@ -8,6 +8,7 @@ import org.imitatespring.util.Assert;
 import org.imitatespring.util.ClassUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -41,7 +42,7 @@ public class PackageResourceLoader {
      * @param basePackage
      * @return
      */
-    public Resource[] getResources(String basePackage) {
+    public Resource[] getResources(String basePackage) throws IOException {
         Assert.notNull(basePackage, "basePackage must not be null");
         //ex. org.imitatespring.dao.v4 --> "org/imitatespring/dao/v4"
         String location = ClassUtils.convertClassNameToResourcePath(basePackage);
@@ -63,7 +64,7 @@ public class PackageResourceLoader {
      * @param rootDir
      * @return
      */
-    private Set<File> retrieveMatchingFiles(File rootDir) {
+    private Set<File> retrieveMatchingFiles(File rootDir) throws IOException {
         //下面三个if判断为了确保rootDir是存在的、是一个目录以及可读
         if (!rootDir.exists()) {
             //Silently skip non-existing directories
@@ -91,7 +92,7 @@ public class PackageResourceLoader {
         return result;
     }
 
-    private void doRetrieveMatchingFiles(File rootDir, Set<File> result) {
+    private void doRetrieveMatchingFiles(File rootDir, Set<File> result) throws IOException {
         File[] dirContents = rootDir.listFiles();
         if (dirContents == null) {
             if (logger.isWarnEnabled()) {

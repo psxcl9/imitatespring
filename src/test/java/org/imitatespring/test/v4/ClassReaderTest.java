@@ -25,7 +25,7 @@ public class ClassReaderTest {
         assertFalse(visitor.isInterface());
         assertEquals("org.imitatespring.service.v4.PetStore", visitor.getClassName());
         assertEquals("java.lang.Object", visitor.getSuperClassName());
-        assertEquals(0, visitor.getInterfaces().length);
+        assertEquals(0, visitor.getInterfaceNames().length);
     }
 
     @Test

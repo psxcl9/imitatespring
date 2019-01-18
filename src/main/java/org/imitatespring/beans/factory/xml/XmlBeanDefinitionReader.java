@@ -14,6 +14,7 @@ import org.imitatespring.beans.factory.config.RuntimeBeanReference;
 import org.imitatespring.beans.factory.config.TypedStringValue;
 import org.imitatespring.beans.factory.support.BeanDefinitionRegistry;
 import org.imitatespring.beans.factory.support.GenericBeanDefinition;
+import org.imitatespring.context.annotation.ClassPathBeanDefinitionScanner;
 import org.imitatespring.core.io.Resource;
 import org.imitatespring.util.StringUtils;
 
@@ -49,6 +50,12 @@ public class XmlBeanDefinitionReader {
 
     public static final String TYPE_ATTRIBUTE = "type";
 
+    public static final String BEANS_NAMESPACE_URI = "http://www.springframework.org/schema/beans";
+
+    public static final String CONTEXT_NAMESPACE_URI = "http://www.springframework.org/schema/context";
+
+    private static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
+
     private BeanDefinitionRegistry registry;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
@@ -76,17 +83,12 @@ public class XmlBeanDefinitionReader {
             while (iterator.hasNext()) {
                 //为每个bean创建对应的BeanDefinition对象
                 Element bean = iterator.next();
-                String id = bean.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = bean.attributeValue(CLASS_ATTRIBUTE);
-                BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
-                if (bean.attribute(SCOPE_ATTRIBUTE) != null) {
-                    bd.setScope(bean.attributeValue(SCOPE_ATTRIBUTE));
+                String namespaceUri = bean.getNamespaceURI();
+                if(this.isDefaultNamespace(namespaceUri)){
+                    parseDefaultElement(bean); //普通的bean
+                } else if(this.isContextNamespace(namespaceUri)){
+                    parseComponentElement(bean); //例如<context:component-scan>
                 }
-                //解析bean中的constructor
-                parseConstructorArgElements(bean, bd);
-                //解析bean中的所有property
-                parsePropertyElement(bean, bd);
-                registry.registerBeanDefinition(id, bd);
             }
         } catch (DocumentException e) {
             throw new BeanDefinitionStoreException("IOException parsing XML document from class path resource", e);
@@ -99,6 +101,34 @@ public class XmlBeanDefinitionReader {
                 }
             }
         }
+    }
+
+    private void parseComponentElement(Element bean) {
+        String basePackages = bean.attributeValue(BASE_PACKAGE_ATTRIBUTE);
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry);
+        scanner.doScan(basePackages);
+    }
+
+    private void parseDefaultElement(Element bean) {
+        String id = bean.attributeValue(ID_ATTRIBUTE);
+        String beanClassName = bean.attributeValue(CLASS_ATTRIBUTE);
+        BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
+        if (bean.attribute(SCOPE_ATTRIBUTE)!=null) {
+            bd.setScope(bean.attributeValue(SCOPE_ATTRIBUTE));
+        }
+        //解析bean中的constructor
+        parseConstructorArgElements(bean, bd);
+        //解析bean中的所有property
+        parsePropertyElement(bean, bd);
+        registry.registerBeanDefinition(id, bd);
+    }
+
+    public boolean isDefaultNamespace(String namespaceUri) {
+        return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
+    }
+
+    public boolean isContextNamespace(String namespaceUri){
+        return (!StringUtils.hasLength(namespaceUri) || CONTEXT_NAMESPACE_URI.equals(namespaceUri));
     }
 
     /**

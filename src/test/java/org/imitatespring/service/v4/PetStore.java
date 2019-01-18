@@ -14,11 +14,6 @@ public class PetStore {
     @Autowired
     private ItemDao itemDao;
 
-    public PetStore(AccountDao accountDao, ItemDao itemDao) {
-        this.accountDao = accountDao;
-        this.itemDao = itemDao;
-    }
-
     public AccountDao getAccountDao() {
         return accountDao;
     }
