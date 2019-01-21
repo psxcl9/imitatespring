@@ -1,11 +1,11 @@
 package org.imitatespring.beans;
 
-public class TypeMismatchException extends BeansException{
+public class TypeMismatchException extends BeansException {
     private transient Object value;
 
     private Class<?> requiredType;
 
-    public TypeMismatchException( Object value, Class<?> requiredType) {
+    public TypeMismatchException(Object value, Class<?> requiredType) {
         super("Failed to convert value :"+value + "to type "+requiredType);
         this.value = value;
         this.requiredType = requiredType;
@@ -18,6 +18,4 @@ public class TypeMismatchException extends BeansException{
     public Class<?> getRequiredType() {
         return requiredType;
     }
-
-
 }

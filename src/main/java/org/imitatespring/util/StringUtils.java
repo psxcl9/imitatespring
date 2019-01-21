@@ -652,7 +652,6 @@ public abstract class StringUtils {
         } else {
             StringTokenizer st = new StringTokenizer(str, delimiters);
             ArrayList tokens = new ArrayList();
-
             while(true) {
                 String token;
                 do {

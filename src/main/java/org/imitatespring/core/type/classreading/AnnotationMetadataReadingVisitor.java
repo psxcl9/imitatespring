@@ -41,8 +41,7 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
         String className = Type.getType(desc).getClassName();
         this.annotationSet.add(className);
         //进一步解析注解的属性
-        AnnotationAttributesReadingVisitor attributesReadingVisitor = new AnnotationAttributesReadingVisitor(className, this.attributeMap);
-        return attributesReadingVisitor;
+        return new AnnotationAttributesReadingVisitor(className, this.attributeMap);
     }
 
     @Override

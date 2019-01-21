@@ -35,21 +35,21 @@ public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMe
      * @param access
      * @param classPath 一个类的文件路径
      * @param signature
-     * @param superClassPath 一个类的父类文件路径
-     * @param interfacesPath 一个类所实现的接口文件路径
+     * @param superName 一个类的父类文件路径
+     * @param interfaces 一个类所实现的接口文件路径
      */
     @Override
-    public void visit(int version, int access, String classPath, String signature, String superClassPath, String[] interfacesPath) {
+    public void visit(int version, int access, String classPath, String signature, String superName, String[] interfaces) {
         this.className = ClassUtils.convertResourcePathToClassName(classPath);
         this.isInterface = ((access & Opcodes.ACC_INTERFACE) != 0);
         this.isAbstract = ((access & Opcodes.ACC_ABSTRACT) != 0);
         this.isFinal = ((access & Opcodes.ACC_FINAL) != 0);
-        if (!StringUtils.isEmpty(superClassPath)) {
-            this.superClassName = ClassUtils.convertResourcePathToClassName(superClassPath);
+        if (!StringUtils.isEmpty(superName)) {
+            this.superClassName = ClassUtils.convertResourcePathToClassName(superName);
         }
-        this.interfaces = new String[interfacesPath.length];
-        for (int i = 0; i < interfacesPath.length; i++) {
-            interfaces[i] = ClassUtils.convertResourcePathToClassName(interfacesPath[i]);
+        this.interfaces = new String[interfaces.length];
+        for (int i = 0; i < interfaces.length; i++) {
+            interfaces[i] = ClassUtils.convertResourcePathToClassName(interfaces[i]);
         }
     }
 

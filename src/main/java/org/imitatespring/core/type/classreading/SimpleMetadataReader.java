@@ -18,6 +18,7 @@ public class SimpleMetadataReader implements MetadataReader {
     private final AnnotationMetadata annotationMetadata;
 
     public SimpleMetadataReader(Resource resource) throws IOException {
+        //使用Buffered提升性能
         BufferedInputStream is = new BufferedInputStream(resource.getInputStream());
 
         ClassReader classReader;

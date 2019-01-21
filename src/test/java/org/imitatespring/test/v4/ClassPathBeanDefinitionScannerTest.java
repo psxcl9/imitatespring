@@ -15,7 +15,7 @@ public class ClassPathBeanDefinitionScannerTest {
     @Test
     public void testParseScanedBean() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
-        String basePackages = "org.imitatespring.service.v4,org.imitatespring.dao.v4";
+        String basePackages = "org.imitatespring.service.v4, org.imitatespring.dao.v4";
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(factory);
         scanner.doScan(basePackages);
 

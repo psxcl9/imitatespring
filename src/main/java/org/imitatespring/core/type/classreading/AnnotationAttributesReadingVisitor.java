@@ -18,7 +18,7 @@ final class AnnotationAttributesReadingVisitor extends AnnotationVisitor {
     private final String annotationType;
 
     /**
-     * 注解下的所有属性集合
+     * 注解下的所有属性集合, key值=this.annotationType value=AnnotationAttributes对象
      */
     private final Map<String, AnnotationAttributes> attributesMap;
 
