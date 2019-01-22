@@ -84,9 +84,9 @@ public class XmlBeanDefinitionReader {
                 //为每个bean创建对应的BeanDefinition对象
                 Element bean = iterator.next();
                 String namespaceUri = bean.getNamespaceURI();
-                if(this.isDefaultNamespace(namespaceUri)){
+                if(this.isDefaultNamespace(namespaceUri)) {
                     parseDefaultElement(bean); //普通的bean
-                } else if(this.isContextNamespace(namespaceUri)){
+                } else if(this.isContextNamespace(namespaceUri)) {
                     parseComponentElement(bean); //例如<context:component-scan>
                 }
             }

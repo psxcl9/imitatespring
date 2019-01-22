@@ -33,7 +33,7 @@ public class ClassPathBeanDefinitionScanner {
 
     public Set<BeanDefinition> doScan(String packagesToScan) {
         String[] basePackages = StringUtils.tokenizeToStringArray(packagesToScan, ",");
-        Set<BeanDefinition> beanDefinitions = new LinkedHashSet<BeanDefinition>();
+        Set<BeanDefinition> beanDefinitions = new LinkedHashSet<>();
         for (String basePackage : basePackages) {
             Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
             for (BeanDefinition candidate : candidates) {
@@ -44,18 +44,14 @@ public class ClassPathBeanDefinitionScanner {
         return beanDefinitions;
     }
 
-    public Set<BeanDefinition> findCandidateComponents(String basePackage) {
-        Set<BeanDefinition> candidates = new LinkedHashSet<BeanDefinition>();
+    private Set<BeanDefinition> findCandidateComponents(String basePackage) {
+        Set<BeanDefinition> candidates = new LinkedHashSet<>();
         try {
-
             Resource[] resources = this.resourceLoader.getResources(basePackage);
-
             for (Resource resource : resources) {
                 try {
-
                     MetadataReader metadataReader = new SimpleMetadataReader(resource);
-
-                    if(metadataReader.getAnnotationMetadata().hasAnnotation(Component.class.getName())){
+                    if (metadataReader.getAnnotationMetadata().hasAnnotation(Component.class.getName())) {
                         ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader.getAnnotationMetadata());
                         String beanName = this.beanNameGenerator.generateBeanName(sbd, this.registry);
                         sbd.setId(beanName);
@@ -65,7 +61,6 @@ public class ClassPathBeanDefinitionScanner {
                     throw new BeanDefinitionStoreException(
                             "Failed to read candidate component class: " + resource, ex);
                 }
-
             }
         } catch (IOException ex) {
             throw new BeanDefinitionStoreException("I/O failure during classpath scanning", ex);

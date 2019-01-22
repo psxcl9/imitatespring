@@ -8,13 +8,10 @@ public class ScannedGenericBeanDefinition extends GenericBeanDefinition implemen
 
     private final AnnotationMetadata metadata;
 
-
     public ScannedGenericBeanDefinition(AnnotationMetadata metadata) {
         super();
-
         this.metadata = metadata;
-
-        setBeanClassName(this.metadata.getClassName());
+        super.setBeanClassName(this.metadata.getClassName());
     }
 
     @Override

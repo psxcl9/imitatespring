@@ -27,15 +27,15 @@ public class ClassPathResource implements Resource {
 
     @Override
     public InputStream getInputStream() throws IOException {
-        InputStream is = classLoader.getResourceAsStream(path);
+        InputStream is = classLoader.getResourceAsStream(this.path);
         if (Objects.isNull(is)) {
-            throw new FileNotFoundException(path + " can not be opened");
+            throw new FileNotFoundException(this.path + " can not be opened");
         }
         return is;
     }
 
     @Override
     public String getDescription() {
-        return path;
+        return this.path;
     }
 }

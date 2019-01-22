@@ -30,13 +30,16 @@ public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMe
     }
 
     /**
-     * 将ASM传过来的数据进行处理, 保存
-     * @param version 一个class的编译版本号
-     * @param access
-     * @param classPath 一个类的文件路径
-     * @param signature
-     * @param superName 一个类的父类文件路径
-     * @param interfaces 一个类所实现的接口文件路径
+     * 扫描类时第一个拜访的方法,主要用于类声明使用, 将ASM传过来的数据进行处理
+     * @param version 类版本
+     * @param access 类的修饰符：修饰符在 ASM 中是以 “ACC_” 开头的常量进行定义。可以作用到类级别上的修饰符有：ACC_PUBLIC（public）、
+     *               ACC_PRIVATE（private）、ACC_PROTECTED（protected）、ACC_FINAL（final）、ACC_SUPER（extends）、
+     *               ACC_INTERFACE（接口）、ACC_ABSTRACT（抽象类）、ACC_ANNOTATION（注解类型）、ACC_ENUM（枚举类型）、
+     *               ACC_DEPRECATED（标记了@Deprecated注解的类）、ACC_SYNTHETIC。
+     * @param classPath 类的名称, 通常我们使用的类完整类名来表示, 但是字节码文件中会以路径的形式表示（/替换.）
+     * @param signature 泛型信息，如果类并未定义任何泛型该参数为空
+     * @param superName 类的父类文件路径
+     * @param interfaces 类所实现的接口文件路径
      */
     @Override
     public void visit(int version, int access, String classPath, String signature, String superName, String[] interfaces) {

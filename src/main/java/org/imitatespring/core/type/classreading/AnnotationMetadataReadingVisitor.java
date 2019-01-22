@@ -30,9 +30,9 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
     }
 
     /**
-     * 先调用父类的visit* 方法
-     * @param desc L开头的注解完整类名
-     * @param visible
+     * 当扫描器扫描到类注解声明时进行调用
+     * @param desc 注解的类型。它使用的是（“L” + “类型路径” + “;”）形式表示
+     * @param visible 该注解是否在 JVM 中可见, 为 true 表示虚拟机可见
      * @return
      */
     @Override

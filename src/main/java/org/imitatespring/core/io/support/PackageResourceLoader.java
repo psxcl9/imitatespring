@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * 包资源加载器
+ * Java包资源解析器
  * @author liaocx
  */
 public class PackageResourceLoader {
@@ -25,12 +25,13 @@ public class PackageResourceLoader {
     private ClassLoader classLoader;
 
     public PackageResourceLoader(ClassLoader classLoader) {
+        //防止注入一个"null"参数
         Assert.notNull(classLoader, "classLoader must not be null");
         this.classLoader = classLoader;
     }
 
     public PackageResourceLoader() {
-        classLoader = ClassUtils.getDefaultClassLoader();
+        this.classLoader = ClassUtils.getDefaultClassLoader();
     }
 
     public ClassLoader getClassLoader() {
@@ -38,7 +39,7 @@ public class PackageResourceLoader {
     }
 
     /**
-     * 解析某个包名下的类,将其封装成FileSystemResource返回
+     * 解析某个包名下的类,将其封装成Resource返回
      * @param basePackage
      * @return
      */
@@ -60,7 +61,7 @@ public class PackageResourceLoader {
     }
 
     /**
-     * 通过递归解析包名所在的根目录下的所有声明的类, 将其放在Set中
+     * 通过递归解析包名所在目录下的所有的类, 将其放在Set中
      * @param rootDir
      * @return
      */

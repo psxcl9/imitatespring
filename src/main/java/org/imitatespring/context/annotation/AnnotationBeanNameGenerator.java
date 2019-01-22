@@ -50,7 +50,6 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
         return beanName;
     }
 
-
     /**
      * Derive a default bean name from the given bean definition.
      * <p>The default implementation delegates to {@link #buildDefaultBeanName(BeanDefinition)}.

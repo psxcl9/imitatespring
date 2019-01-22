@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * first test
+ */
 public class PackageResourceLoaderTest {
     @Test
     public void testGetResources() throws IOException {
