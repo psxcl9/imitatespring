@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Java包资源解析器
+ * 解析Java包下的所有类
  * @author liaocx
  */
 public class PackageResourceLoader {
@@ -61,7 +61,7 @@ public class PackageResourceLoader {
     }
 
     /**
-     * 通过递归解析包名所在目录下的所有的类, 将其放在Set中
+     * 首先判断传入的包名所对应的目录是否存在、以及权限是否可读, 然后通过递归解析包名所在目录下的所有的类, 将其放在Set中
      * @param rootDir
      * @return
      */
@@ -82,6 +82,7 @@ public class PackageResourceLoader {
             return Collections.EMPTY_SET;
         }
         if (!rootDir.canRead()) {
+            //can not read
             if (logger.isWarnEnabled()) {
                 logger.warn("Cannot search for matching files underneath directory [" + rootDir.getAbsolutePath() +
                         "] because the application is not allowed to read the directory");
@@ -93,7 +94,15 @@ public class PackageResourceLoader {
         return result;
     }
 
+    /**
+     * 组装包名所对应目录下的所有class文件, 将其存放在Set中
+     * @param rootDir
+     * @param result
+     * @throws IOException
+     */
     private void doRetrieveMatchingFiles(File rootDir, Set<File> result) throws IOException {
+        //list()返回的是一个String类型数组，它只是一个数组，仅仅只是一个个文件的名字；
+        //而listFiles()方法返回的是File类的引用
         File[] dirContents = rootDir.listFiles();
         if (dirContents == null) {
             if (logger.isWarnEnabled()) {
@@ -104,6 +113,7 @@ public class PackageResourceLoader {
         for (File content : dirContents) {
             if (content.isDirectory()) {
                 if (!content.canRead()) {
+                    //目录不可读
                     if (logger.isDebugEnabled()) {
                         logger.debug("Skipping subdirectory [" + rootDir.getAbsolutePath() +
                                 "] because the application is not allowed to read the directory");

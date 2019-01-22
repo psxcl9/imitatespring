@@ -15,7 +15,7 @@ public class PackageResourceLoaderTest {
     @Test
     public void testGetResources() throws IOException {
         PackageResourceLoader loader = new PackageResourceLoader();
-        Resource[] resources = loader.getResources("org.imitatespring.dao.v4");
-        assertEquals(2, resources.length);
+        Resource[] resources = loader.getResources("org.imitatespring.dao");
+        assertEquals(6, resources.length);
     }
 }
