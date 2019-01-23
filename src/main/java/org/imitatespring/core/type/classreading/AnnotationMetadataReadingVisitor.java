@@ -11,13 +11,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 解析所有的注解
+ * Class文件中注解部分的解析, 处理ClassReader读取Class文件时传过来的数据
  * @author liaocx
  */
 public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor implements AnnotationMetadata {
 
     /**
-     * 所有注解的集合
+     * 所有类上的注解的集合
      */
     private final Set<String> annotationSet = new LinkedHashSet<>(4);
 
@@ -30,7 +30,7 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
     }
 
     /**
-     * 当扫描器扫描到类注解声明时进行调用
+     * 当扫描器扫描到类注解声明时进行调用, 有多个类注解时依次调用
      * @param desc 注解的类型。它使用的是（“L” + “类型路径” + “;”）形式表示
      * @param visible 该注解是否在 JVM 中可见, 为 true 表示虚拟机可见
      * @return

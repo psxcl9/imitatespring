@@ -90,7 +90,7 @@ public class PackageResourceLoader {
             return Collections.EMPTY_SET;
         }
         Set<File> result = new LinkedHashSet<>(8);
-        doRetrieveMatchingFiles(rootDir, result);
+        doRecursionMatchingFiles(rootDir, result);
         return result;
     }
 
@@ -100,7 +100,7 @@ public class PackageResourceLoader {
      * @param result
      * @throws IOException
      */
-    private void doRetrieveMatchingFiles(File rootDir, Set<File> result) throws IOException {
+    private void doRecursionMatchingFiles(File rootDir, Set<File> result) throws IOException {
         //list()返回的是一个String类型数组，它只是一个数组，仅仅只是一个个文件的名字；
         //而listFiles()方法返回的是File类的引用
         File[] dirContents = rootDir.listFiles();
@@ -120,7 +120,7 @@ public class PackageResourceLoader {
                     }
                 } else {
                     //通过递归跳过所有的目录
-                    doRetrieveMatchingFiles(content, result);
+                    doRecursionMatchingFiles(content, result);
                 }
             } else {
                 result.add(content);

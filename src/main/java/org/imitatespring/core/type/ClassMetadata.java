@@ -1,6 +1,7 @@
 package org.imitatespring.core.type;
 
 public interface ClassMetadata {
+
     /**
      * Return the name of the underlying class.
      */

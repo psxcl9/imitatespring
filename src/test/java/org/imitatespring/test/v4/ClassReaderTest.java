@@ -6,19 +6,30 @@ import static org.junit.Assert.*;
 
 import org.imitatespring.core.type.classreading.AnnotationMetadataReadingVisitor;
 import org.imitatespring.core.type.classreading.ClassMetadataReadingVisitor;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.asm.ClassReader;
 
 import java.io.IOException;
 
+/**
+ * second test
+ */
 public class ClassReaderTest {
 
-    @Test
-    public void testGetClassMetadata() throws IOException {
-        ClassPathResource resource = new ClassPathResource("org/imitatespring/service/v4/PetStore.class");
-        ClassReader reader = new ClassReader(resource.getInputStream());
+    private ClassPathResource resource = null;
+    private ClassReader reader = null;
 
+    @Before
+    public void setUp() throws IOException {
+        resource = new ClassPathResource("org/imitatespring/service/v4/PetStore.class");
+        reader = new ClassReader(resource.getInputStream());
+    }
+
+    @Test
+    public void testGetClassMetadata() {
         ClassMetadataReadingVisitor visitor = new ClassMetadataReadingVisitor();
+        //开始解析Class文件, 不断地回调自定义的visitor类中重写的visit*方法
         reader.accept(visitor, ClassReader.SKIP_DEBUG);
         assertFalse(visitor.isAbstract());
         assertFalse(visitor.isFinal());
@@ -29,10 +40,7 @@ public class ClassReaderTest {
     }
 
     @Test
-    public void testGetAnnotation() throws Exception {
-        ClassPathResource resource = new ClassPathResource("org/imitatespring/service/v4/PetStore.class");
-        ClassReader reader = new ClassReader(resource.getInputStream());
-
+    public void testGetAnnotation() {
         AnnotationMetadataReadingVisitor visitor = new AnnotationMetadataReadingVisitor();
         reader.accept(visitor, ClassReader.SKIP_DEBUG);
         String annotation = "org.imitatespring.stereotype.Component";

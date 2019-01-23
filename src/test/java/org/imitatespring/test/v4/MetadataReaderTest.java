@@ -14,12 +14,16 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * third test
+ */
 public class MetadataReaderTest {
 
     @Test
     public void testGetMetadata() throws IOException {
         ClassPathResource resource = new ClassPathResource("org/imitatespring/service/v4/PetStore.class");
         MetadataReader reader = new SimpleMetadataReader(resource);
+        //此处ClassMetadata的所有数据也能拿到
         AnnotationMetadata amd = reader.getAnnotationMetadata();
         String annotation = Component.class.getName();
         assertTrue(amd.hasAnnotation(annotation));

@@ -20,7 +20,6 @@ public class SimpleMetadataReader implements MetadataReader {
     public SimpleMetadataReader(Resource resource) throws IOException {
         //使用Buffered提升性能
         BufferedInputStream is = new BufferedInputStream(resource.getInputStream());
-
         ClassReader classReader;
         try {
             classReader = new ClassReader(is);
@@ -31,7 +30,7 @@ public class SimpleMetadataReader implements MetadataReader {
         }
         AnnotationMetadataReadingVisitor visitor = new AnnotationMetadataReadingVisitor();
         classReader.accept(visitor, ClassReader.SKIP_DEBUG);
-        //此处所有的数据都被visitor拿到
+        //此处Class中的数据都被visitor中的visit*方法处理
         this.annotationMetadata = visitor;
         //classMetadata也取得是一个AnnotationMetadataReadingVisitor对象
         this.classMetadata = visitor;

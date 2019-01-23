@@ -66,7 +66,6 @@ public abstract class StringUtils {
             return false;
         } else {
             int strLen = str.length();
-
             for(int i = 0; i < strLen; ++i) {
                 if (Character.isWhitespace(str.charAt(i))) {
                     return true;

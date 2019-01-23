@@ -10,6 +10,9 @@ import org.imitatespring.stereotype.Component;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+/**
+ * fourth test
+ */
 public class ClassPathBeanDefinitionScannerTest {
 
     @Test

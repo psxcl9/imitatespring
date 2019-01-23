@@ -33,15 +33,15 @@ public class ClassPathBeanDefinitionScanner {
 
     public Set<BeanDefinition> doScan(String packagesToScan) {
         String[] basePackages = StringUtils.tokenizeToStringArray(packagesToScan, ",");
-        Set<BeanDefinition> beanDefinitions = new LinkedHashSet<>();
+        Set<BeanDefinition> beanDefinitionSet = new LinkedHashSet<>();
         for (String basePackage : basePackages) {
             Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
             for (BeanDefinition candidate : candidates) {
-                beanDefinitions.add(candidate);
                 registry.registerBeanDefinition(candidate.getId(), candidate);
+                beanDefinitionSet.add(candidate);
             }
         }
-        return beanDefinitions;
+        return beanDefinitionSet;
     }
 
     private Set<BeanDefinition> findCandidateComponents(String basePackage) {

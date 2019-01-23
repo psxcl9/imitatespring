@@ -12,10 +12,13 @@ import org.imitatespring.stereotype.Component;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * fifth test
+ */
 public class XmlBeanDefinitionReaderTest {
 
 	@Test
-	public void testParseScanedBean(){
+	public void testParseScannedBean() {
 		DefaultBeanFactory factory = new DefaultBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 		Resource resource = new ClassPathResource("petstore-v4.xml");
