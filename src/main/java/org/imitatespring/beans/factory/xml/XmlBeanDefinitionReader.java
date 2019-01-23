@@ -105,7 +105,7 @@ public class XmlBeanDefinitionReader {
 
     private void parseComponentElement(Element bean) {
         String basePackages = bean.attributeValue(BASE_PACKAGE_ATTRIBUTE);
-        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry);
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(this.registry);
         scanner.doScan(basePackages);
     }
 

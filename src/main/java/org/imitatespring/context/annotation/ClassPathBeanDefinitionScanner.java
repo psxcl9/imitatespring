@@ -1,7 +1,5 @@
 package org.imitatespring.context.annotation;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.imitatespring.beans.factory.BeanDefinitionStoreException;
 import org.imitatespring.beans.factory.config.BeanDefinition;
 import org.imitatespring.beans.factory.support.BeanDefinitionRegistry;
@@ -23,8 +21,6 @@ public class ClassPathBeanDefinitionScanner {
 
     private PackageResourceLoader resourceLoader = new PackageResourceLoader();
 
-    protected final Log logger = LogFactory.getLog(getClass());
-
     private BeanNameGenerator beanNameGenerator = new AnnotationBeanNameGenerator();
 
     public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
@@ -33,15 +29,15 @@ public class ClassPathBeanDefinitionScanner {
 
     public Set<BeanDefinition> doScan(String packagesToScan) {
         String[] basePackages = StringUtils.tokenizeToStringArray(packagesToScan, ",");
-        Set<BeanDefinition> beanDefinitionSet = new LinkedHashSet<>();
+        Set<BeanDefinition> beanDefinitions = new LinkedHashSet<>();
         for (String basePackage : basePackages) {
             Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
             for (BeanDefinition candidate : candidates) {
                 registry.registerBeanDefinition(candidate.getId(), candidate);
-                beanDefinitionSet.add(candidate);
+                beanDefinitions.add(candidate);
             }
         }
-        return beanDefinitionSet;
+        return beanDefinitions;
     }
 
     private Set<BeanDefinition> findCandidateComponents(String basePackage) {
