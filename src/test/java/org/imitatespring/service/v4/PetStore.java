@@ -1,8 +1,8 @@
 package org.imitatespring.service.v4;
 
 import org.imitatespring.beans.factory.annotation.Autowired;
-import org.imitatespring.dao.v3.AccountDao;
-import org.imitatespring.dao.v3.ItemDao;
+import org.imitatespring.dao.v4.AccountDao;
+import org.imitatespring.dao.v4.ItemDao;
 import org.imitatespring.stereotype.Component;
 
 @Component(value = "petStore")

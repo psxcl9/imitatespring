@@ -25,10 +25,15 @@ public class ConstructorResolver {
         this.beanFactory = factory;
     }
 
-    public Object autowireConstructor(final BeanDefinition bd) {
+    public Object autowireConstructor(final BeanDefinition bd)  {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
-        Class<?> beanClass = bd.resolveBeanClass(beanFactory.getBeanClassLoader());
+        Class<?> beanClass = null;
+        try {
+            beanClass = bd.resolveBeanClass(beanFactory.getBeanClassLoader());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("can't load class: " + bd.getBeanClassName());
+        }
         //通过反射获取这个bean的所有Constructor
         Constructor<?>[] candidates = beanClass.getConstructors();
         //用于将构造器参数中的ref转换成相应的对象

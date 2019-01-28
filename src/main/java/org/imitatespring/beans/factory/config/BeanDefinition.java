@@ -79,12 +79,14 @@ public interface BeanDefinition {
      * 获取bean的Class对象
      * @return
      */
-    Class<?> getBeanClass();
+    Class<?> getBeanClass() throws IllegalStateException;
+
+    boolean hasBeanClass();
 
     /**
      * 加载bean的Class对象
      * @param classLoader
      * @return
      */
-    Class<?> resolveBeanClass(ClassLoader classLoader);
+    Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
 }

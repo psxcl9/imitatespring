@@ -24,7 +24,11 @@ public class ConstructorResolverTest {
         reader.loadBeanDefinitions(new ClassPathResource("petstore-v3.xml"));
 
         BeanDefinition bd = factory.getBeanDefinition("petStore");
-        bd.resolveBeanClass(factory.getBeanClassLoader());
+        try {
+            bd.resolveBeanClass(factory.getBeanClassLoader());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("can't load class: " + bd.getBeanClassName());
+        }
     }
 
     @Test
@@ -34,11 +38,8 @@ public class ConstructorResolverTest {
         reader.loadBeanDefinitions(new ClassPathResource("petstore-v3.xml"));
 
         BeanDefinition bd = factory.getBeanDefinition("petStore");
-
         ConstructorResolver resolver = new ConstructorResolver(factory);
-
         PetStore petStore = (PetStore) resolver.autowireConstructor(bd);
-
         assertEquals(24, petStore.getAge());
         assertTrue(petStore.getAccountDao() instanceof AccountDao);
         assertTrue(petStore.getItemDao() instanceof ItemDao);

@@ -6,6 +6,7 @@ import org.imitatespring.beans.SimpleTypeConverter;
 import org.imitatespring.beans.factory.config.BeanDefinition;
 import org.imitatespring.beans.factory.BeanCreationException;
 import org.imitatespring.beans.factory.config.ConfigurableBeanFactory;
+import org.imitatespring.beans.factory.config.DependencyDescriptor;
 import org.imitatespring.util.ClassUtils;
 
 import java.beans.BeanInfo;
@@ -150,5 +151,31 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
     @Override
     public ClassLoader getBeanClassLoader() {
         return beanClassLoader != null ? beanClassLoader : ClassUtils.getDefaultClassLoader();
+    }
+
+    @Override
+    public Object resolveDependency(DependencyDescriptor descriptor) {
+        Class<?> typeToMatch = descriptor.getDependencyType();
+        for (BeanDefinition bd : this.beanDefinitionMap.values()) {
+            //确保BeanDefinition 有Class对象
+            resolveBeanClass(bd);
+            Class<?> beanClass = bd.getBeanClass();
+            if (typeToMatch.isAssignableFrom(beanClass)) {
+                return this.getBean(bd.getId());
+            }
+        }
+        return null;
+    }
+
+    private void resolveBeanClass(BeanDefinition bd) {
+        if (bd.hasBeanClass()) {
+            return;
+        } else {
+            try {
+                bd.resolveBeanClass(this.getBeanClassLoader());
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("can't load class: " + bd.getBeanClassName());
+            }
+        }
     }
 }

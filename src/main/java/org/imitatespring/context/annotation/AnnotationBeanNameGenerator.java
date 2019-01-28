@@ -23,7 +23,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
                 return beanName;
             }
         }
-        return buildDefaultBeanName(definition, registry);
+        return buildDefaultBeanName(definition);
     }
 
     /**

@@ -85,9 +85,11 @@ public class XmlBeanDefinitionReader {
                 Element bean = iterator.next();
                 String namespaceUri = bean.getNamespaceURI();
                 if(this.isDefaultNamespace(namespaceUri)) {
-                    parseDefaultElement(bean); //普通的bean
+                    //普通的bean配置
+                    parseDefaultElement(bean);
                 } else if(this.isContextNamespace(namespaceUri)) {
-                    parseComponentElement(bean); //例如<context:component-scan>
+                    //例如<context:component-scan>
+                    parseComponentElement(bean);
                 }
             }
         } catch (DocumentException e) {

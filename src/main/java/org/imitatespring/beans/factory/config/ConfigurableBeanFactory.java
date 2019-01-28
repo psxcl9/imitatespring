@@ -1,12 +1,10 @@
 package org.imitatespring.beans.factory.config;
 
-import org.imitatespring.beans.factory.BeanFactory;
-
 /**
  * 支持自定义设置ClassLoader
  * @author liaocx
  */
-public interface ConfigurableBeanFactory extends BeanFactory {
+public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
 
     /**
      * 自定义ClassLoader

@@ -9,7 +9,8 @@ import org.junit.runners.Suite;
         ClassReaderTest.class,
         MetadataReaderTest.class,
         PackageResourceLoaderTest.class,
-        XmlBeanDefinitionReaderTest.class
+        XmlBeanDefinitionReaderTest.class,
+        DependencyDescriptorTest.class
 })
 public class V4AllTests {
 }

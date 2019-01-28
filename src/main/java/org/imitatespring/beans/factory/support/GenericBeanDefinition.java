@@ -94,28 +94,46 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.beanClass = beanClass;
     }
 
+    /**
+     * 默认先加载resolveBeanClass
+     * @return
+     */
     @Override
     public Class<?> getBeanClass() {
+        if (this.beanClass == null) {
+            throw new IllegalStateException("Bean class name [" + this.getBeanClassName() + "] has not been resolved into an actual Class");
+        }
+        //以上是新增的代码, 目的是确保调用getBeanClass之前都会先调用resolveBeanClass方法
         return this.beanClass;
     }
 
     @Override
-    public Class<?> resolveBeanClass(ClassLoader classLoader) {
+    public boolean hasBeanClass() {
+        return this.beanClass != null;
+    }
+
+    @Override
+    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
         String className = this.getBeanClassName();
-        Class<?> resolvedClass;
-        Class<?> cacheBeanClass = this.getBeanClass();
-        if (Objects.isNull(cacheBeanClass)) {
-            //加载并更新缓存
-            try {
-                resolvedClass = classLoader.loadClass(className);
-                setBeanClass(resolvedClass);
-            } catch (ClassNotFoundException e) {
-                throw new BeanCreationException(className, "the class was not found", e);
-            }
-        } else {
-            //取已缓存的clazz
-            resolvedClass = cacheBeanClass;
+        if (className == null) {
+            return null;
         }
+        Class<?> resolvedClass = classLoader.loadClass(className);
+        setBeanClass(resolvedClass);
+//        Class<?> resolvedClass;
+//        Class<?> cacheBeanClass = this.getBeanClass();
+//        if (Objects.isNull(cacheBeanClass)) {
+//            //加载并更新缓存
+//            try {
+//                resolvedClass = classLoader.loadClass(className);
+//                setBeanClass(resolvedClass);
+//            } catch (ClassNotFoundException e) {
+//                throw new BeanCreationException(className, "the class was not found", e);
+//            }
+//        } else {
+//            //取已缓存的clazz
+//            resolvedClass = cacheBeanClass;
+//        }
         return resolvedClass;
     }
 }
