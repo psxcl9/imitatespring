@@ -95,7 +95,7 @@ public class GenericBeanDefinition implements BeanDefinition {
     }
 
     /**
-     * 默认先加载resolveBeanClass
+     * 默认先加载resolveBeanClass(ClassLoader classLoader)方法
      * @return
      */
     @Override

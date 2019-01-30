@@ -153,13 +153,19 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         return beanClassLoader != null ? beanClassLoader : ClassUtils.getDefaultClassLoader();
     }
 
+    /**
+     * 将依赖注入传入的参数与已经缓存的beanDefinition对象进行比较, 如果存在则获取其实例bean
+     * @param descriptor
+     * @return
+     */
     @Override
     public Object resolveDependency(DependencyDescriptor descriptor) {
         Class<?> typeToMatch = descriptor.getDependencyType();
         for (BeanDefinition bd : this.beanDefinitionMap.values()) {
-            //确保BeanDefinition 有Class对象
+            //确保BeanDefinition对象中 有beanClass对象
             resolveBeanClass(bd);
             Class<?> beanClass = bd.getBeanClass();
+            //默认要依赖注入的bean已经提前缓存到BeanFactory中
             if (typeToMatch.isAssignableFrom(beanClass)) {
                 return this.getBean(bd.getId());
             }

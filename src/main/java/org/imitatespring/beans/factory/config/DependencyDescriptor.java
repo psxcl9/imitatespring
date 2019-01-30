@@ -4,6 +4,10 @@ import org.imitatespring.util.Assert;
 
 import java.lang.reflect.Field;
 
+/**
+ * 封装依赖注入相关的参数类, 目前只支持属性注入
+ * @author liaocx
+ */
 public class DependencyDescriptor {
 
     private Field field;
@@ -20,6 +24,7 @@ public class DependencyDescriptor {
         if (this.field != null) {
             return this.field.getType();
         }
+        //目前暂时只支持属性依赖注入, 可扩展
         throw new RuntimeException("only support field dependency");
     }
 
