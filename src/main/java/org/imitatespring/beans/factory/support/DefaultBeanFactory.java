@@ -3,15 +3,14 @@ package org.imitatespring.beans.factory.support;
 import org.apache.commons.beanutils.BeanUtils;
 import org.imitatespring.beans.PropertyValue;
 import org.imitatespring.beans.SimpleTypeConverter;
-import org.imitatespring.beans.factory.config.BeanDefinition;
+import org.imitatespring.beans.factory.config.*;
 import org.imitatespring.beans.factory.BeanCreationException;
-import org.imitatespring.beans.factory.config.ConfigurableBeanFactory;
-import org.imitatespring.beans.factory.config.DependencyDescriptor;
 import org.imitatespring.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -21,12 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * 底层的bean工厂, 用于注册bean的Definition, 获取bean实例以及Definition
  * @author liaocx
  */
-public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+public class  DefaultBeanFactory extends DefaultSingletonBeanRegistry
         implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     private ClassLoader beanClassLoader;
+
+    private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     /**
      * BeanDefinitionRegistry
@@ -93,6 +94,13 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
     }
 
     private void populateBean(BeanDefinition bd, Object bean) {
+
+        for (BeanPostProcessor processor : this.getBeanPostProcessors()) {
+            if (processor instanceof InstantiationAwareBeanPostProcessor) {
+                ((InstantiationAwareBeanPostProcessor) processor).postProcessPropertyValues(bean, bd.getId());
+            }
+        }
+
         //取出这个bean中所有的propertyValue, 也有可能没有
         List<PropertyValue> pvs = bd.getPropertyValue();
         if (pvs == null || pvs.isEmpty()) {
@@ -183,5 +191,16 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
                 throw new RuntimeException("can't load class: " + bd.getBeanClassName());
             }
         }
+    }
+
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor postProcessor) {
+        this.beanPostProcessors.add(postProcessor);
+    }
+
+    @Override
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
     }
 }

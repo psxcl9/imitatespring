@@ -41,7 +41,7 @@ public class InjectionMetadataTest {
         InjectionMetadata metadata = new InjectionMetadata(clz, elements);
 
         PetStore petStore = new PetStore();
-        //???为什么inject是petStore, 方法命名上语义不通
+
         metadata.inject(petStore);
         assertTrue(petStore.getAccountDao() instanceof AccountDao);
         assertTrue(petStore.getItemDao() instanceof ItemDao);

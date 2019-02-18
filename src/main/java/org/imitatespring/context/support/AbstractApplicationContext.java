@@ -1,5 +1,7 @@
 package org.imitatespring.context.support;
 
+import org.imitatespring.beans.factory.annotation.AutowiredAnnotationProcessor;
+import org.imitatespring.beans.factory.config.ConfigurableBeanFactory;
 import org.imitatespring.beans.factory.support.DefaultBeanFactory;
 import org.imitatespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.imitatespring.context.ApplicationContext;
@@ -23,6 +25,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         reader.loadBeanDefinitions(resource);
         //Spring中也是这样处理, 没有提供set ClassLoader的入口, 取得是默认ClassLoader
         factory.setBeanClassLoader(getBeanClassLoader());
+        registerBeanPostProcessors(factory);
     }
 
     @Override
@@ -43,5 +46,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
     public ClassLoader getBeanClassLoader() {
         return beanClassLoader != null ? beanClassLoader : ClassUtils.getDefaultClassLoader();
+    }
+
+    protected void registerBeanPostProcessors(ConfigurableBeanFactory beanFactory) {
+
+        AutowiredAnnotationProcessor postProcessor = new AutowiredAnnotationProcessor();
+        postProcessor.setBeanFactory(beanFactory);
+        beanFactory.addBeanPostProcessor(postProcessor);
     }
 }

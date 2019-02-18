@@ -84,7 +84,7 @@ public interface BeanDefinition {
     boolean hasBeanClass();
 
     /**
-     * 加载bean的Class对象
+     * 将bean的ClassName转换成一个 Class对象
      * @param classLoader
      * @return
      */

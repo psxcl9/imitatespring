@@ -119,21 +119,8 @@ public class GenericBeanDefinition implements BeanDefinition {
             return null;
         }
         Class<?> resolvedClass = classLoader.loadClass(className);
+        //缓存beanClass对象
         setBeanClass(resolvedClass);
-//        Class<?> resolvedClass;
-//        Class<?> cacheBeanClass = this.getBeanClass();
-//        if (Objects.isNull(cacheBeanClass)) {
-//            //加载并更新缓存
-//            try {
-//                resolvedClass = classLoader.loadClass(className);
-//                setBeanClass(resolvedClass);
-//            } catch (ClassNotFoundException e) {
-//                throw new BeanCreationException(className, "the class was not found", e);
-//            }
-//        } else {
-//            //取已缓存的clazz
-//            resolvedClass = cacheBeanClass;
-//        }
         return resolvedClass;
     }
 }

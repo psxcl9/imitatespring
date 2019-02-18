@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class InjectionMetadata {
 
     /**
-     * 往哪个类中进行注入
+     * 对 哪个类中进行注入
      */
     private Class<?> targetClass;
 

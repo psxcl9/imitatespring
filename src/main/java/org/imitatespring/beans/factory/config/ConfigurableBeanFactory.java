@@ -1,10 +1,12 @@
 package org.imitatespring.beans.factory.config;
 
+import java.util.List;
+
 /**
  * 支持自定义设置ClassLoader
  * @author liaocx
  */
-public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
+public interface  ConfigurableBeanFactory extends AutowireCapableBeanFactory {
 
     /**
      * 自定义ClassLoader
@@ -17,4 +19,8 @@ public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
      * @return
      */
     ClassLoader getBeanClassLoader();
+
+    void addBeanPostProcessor(BeanPostProcessor postProcessor);
+
+    List<BeanPostProcessor> getBeanPostProcessors();
 }

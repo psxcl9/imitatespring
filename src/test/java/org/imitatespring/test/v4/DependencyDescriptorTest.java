@@ -22,6 +22,7 @@ public class DependencyDescriptorTest {
         Resource resource = new ClassPathResource("petstore-v4.xml");
         reader.loadBeanDefinitions(resource);
 
+        //通过反射的方式拿到声明的属性, 此处和Component注解中使用的ASM有所区别
         Field field = PetStore.class.getDeclaredField("accountDao");
         DependencyDescriptor descriptor = new DependencyDescriptor(field, true);
         Object obj = factory.resolveDependency(descriptor);
