@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
+/**
+ * sixth test
+ */
 public class DependencyDescriptorTest {
 
     @Test

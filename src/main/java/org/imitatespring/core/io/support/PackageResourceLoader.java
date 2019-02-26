@@ -47,8 +47,7 @@ public class PackageResourceLoader {
         Assert.notNull(basePackage, "basePackage must not be null");
         //ex. org.imitatespring.dao.v4 --> "org/imitatespring/dao/v4"
         String location = ClassUtils.convertClassNameToResourcePath(basePackage);
-        ClassLoader cl = getClassLoader();
-        URL url = cl.getResource(location);
+        URL url = this.classLoader.getResource(location);
         //用包名所在的路径创建一个file对象, 是一个目录
         File rootDir = new File(url.getFile());
         Set<File> matchingFiles = retrieveMatchingFiles(rootDir);
@@ -89,19 +88,19 @@ public class PackageResourceLoader {
             }
             return Collections.EMPTY_SET;
         }
-        Set<File> result = new LinkedHashSet<>(8);
-        doRecursionMatchingFiles(rootDir, result);
-        return result;
+        Set<File> matchingClassFiles = new LinkedHashSet<>(8);
+        doRecursionMatchingFiles(rootDir, matchingClassFiles);
+        return matchingClassFiles;
     }
 
     /**
      * 组装包名所对应目录下的所有class文件, 将其存放在Set中
      * @param rootDir
-     * @param result
+     * @param classSets
      * @throws IOException
      */
-    private void doRecursionMatchingFiles(File rootDir, Set<File> result) throws IOException {
-        //list()返回的是一个String类型数组，它只是一个数组，仅仅只是一个个文件的名字；
+    private void doRecursionMatchingFiles(File rootDir, Set<File> classSets) throws IOException {
+        //File类中 list()返回的是一个String类型数组，它只是一个数组，仅仅只是一个个文件的名字；
         //而listFiles()方法返回的是File类的引用
         File[] dirContents = rootDir.listFiles();
         if (dirContents == null) {
@@ -112,6 +111,7 @@ public class PackageResourceLoader {
         }
         for (File content : dirContents) {
             if (content.isDirectory()) {
+                //属于目录
                 if (!content.canRead()) {
                     //目录不可读
                     if (logger.isDebugEnabled()) {
@@ -120,10 +120,11 @@ public class PackageResourceLoader {
                     }
                 } else {
                     //通过递归跳过所有的目录
-                    doRecursionMatchingFiles(content, result);
+                    doRecursionMatchingFiles(content, classSets);
                 }
             } else {
-                result.add(content);
+                //属于文件
+                classSets.add(content);
             }
         }
     }
